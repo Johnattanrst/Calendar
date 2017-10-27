@@ -78,6 +78,8 @@
 		BC32A4741D31055C00AB19D7 /* MGCCalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC32A46D1D31055C00AB19D7 /* MGCCalendarHeaderView.m */; };
 		BC3300D03E96ADC4526AC9CFE3110876 /* MGCAllDayEventsViewLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 36C709E8D3709828F4CDCC6F9E8B8F1F /* MGCAllDayEventsViewLayout.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		BC4DAE0E1E3ED7AEF78839F4815A0211 /* MGCMonthPlannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F33A77B1C88FA226CA3F123445A1AB4 /* MGCMonthPlannerViewController.m */; };
+		BDA8011A1FA3CB1C00F91F2D /* MGCCalendarHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDA801191FA3CA0600F91F2D /* MGCCalendarHeaderCell.xib */; };
+		BDA8011B1FA3CB1E00F91F2D /* MGCCalendarHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDA801191FA3CA0600F91F2D /* MGCCalendarHeaderCell.xib */; };
 		BE3DF61E19CE6628EFBC28FC4E5249F1 /* MGCYearCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C8D6DE7DAE5F35E652CCE40F50B208 /* MGCYearCalendarView.m */; };
 		C172318723A82A556756CE7A10ED572B /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B7B1DA5EB4C3FA05D4BB2B2B9700FD /* EventKit.framework */; };
 		C2E9436B5AD60E85AD494381590EBEC4 /* MGCMonthPlannerViewDayCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EA47F11125BF0BED9FC31F762B3C5EAA /* MGCMonthPlannerViewDayCell.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -770,6 +772,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDA8011A1FA3CB1C00F91F2D /* MGCCalendarHeaderCell.xib in Resources */,
 				BC129756EB184EB7B54FC078D77EAE6F /* CalendarLib.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -778,6 +781,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDA8011B1FA3CB1E00F91F2D /* MGCCalendarHeaderCell.xib in Resources */,
 				44C3A8E49CF779F8E6C61A9E1F51A74D /* en.lproj in Resources */,
 				84A07A7FFF9C2A776980FEE43091F865 /* fr.lproj in Resources */,
 			);
