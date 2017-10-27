@@ -33,21 +33,21 @@
 
 
 //define font
-#define font10 [UIFont systemFontOfSize:10.0];
-#define font12 [UIFont systemFontOfSize:12.0];
-#define font13 [UIFont systemFontOfSize:13.0];
-#define font14 [UIFont systemFontOfSize:14.0];
-#define font15 [UIFont systemFontOfSize:15.0];
-#define font16 [UIFont systemFontOfSize:16.0];
-#define font17 [UIFont systemFontOfSize:17.0];
-#define font18 [UIFont systemFontOfSize:18.0];
-#define font24 [UIFont systemFontOfSize:24.0];
-#define font12Bold [UIFont fontWithName:@"Helvetica-Bold" size:12.0];
-#define font13Bold [UIFont fontWithName:@"Helvetica-Bold" size:13.0];
-#define font14Bold [UIFont fontWithName:@"Helvetica-Bold" size:14.0];
-#define font15Bold [UIFont fontWithName:@"Helvetica-Bold" size:15.0];
-#define font17Bold [UIFont fontWithName:@"Helvetica-Bold" size:17.0];
-#define font18Bold [UIFont fontWithName:@"Helvetica-Bold" size:18.0];
+#define font10 [UIFont fontWithName:@"ProximaNovaA-Regular" size:10.0];
+#define font12 [UIFont fontWithName:@"ProximaNovaA-Regular" size:12.0];
+#define font13 [UIFont fontWithName:@"ProximaNovaA-Regular" size:13.0];
+#define font14 [UIFont fontWithName:@"ProximaNovaA-Regular" size:14.0];
+#define font15 [UIFont fontWithName:@"ProximaNovaA-Regular" size:15.0];
+#define font16 [UIFont fontWithName:@"ProximaNovaA-Regular" size:16.0];
+#define font17 [UIFont fontWithName:@"ProximaNovaA-Regular" size:17.0];
+#define font18 [UIFont fontWithName:@"ProximaNovaA-Regular" size:18.0];
+#define font24 [UIFont fontWithName:@"ProximaNovaA-Regular" size:24.0];
+#define font12Bold [UIFont fontWithName:@"ProximaNovaA-Bold" size:12.0];
+#define font13Bold [UIFont fontWithName:@"ProximaNovaA-Bold" size:13.0];
+#define font14Bold [UIFont fontWithName:@"ProximaNovaA-Bold" size:14.0];
+#define font15Bold [UIFont fontWithName:@"ProximaNovaA-Bold" size:15.0];
+#define font17Bold [UIFont fontWithName:@"ProximaNovaA-Bold" size:17.0];
+#define font18Bold [UIFont fontWithName:@"ProximaNovaA-Bold" size:18.0];
 #define APPEngine  [IMEngine shareEngine]
 
 
@@ -57,7 +57,6 @@
 
 #define isiPad (IDIOM == IPAD ? YES:NO)
 
-#define kHeaderHeight 100
-
 
 #endif
+
