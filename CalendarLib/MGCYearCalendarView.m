@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -40,16 +40,16 @@
 static NSString* const MonthCellReuseIdentifier = @"MonthCellReuseIdentifier";
 static NSString* const YearHeaderReuseIdentifier = @"YearHeaderReuseIdentifier";
 
-static const NSUInteger kYearsLoadingStep = 10;			// number of years in a loaded page = 2 * kYearsLoadingStep  + 1
-static const CGFloat kCellMinimumSpacing = 25;			// minimum distance between month cells
-static const CGFloat kDefaultDayFontSize = 13;			// default font size for the day ordinals
-static const CGFloat kDefaultMonthHeaderFontSize = 20;	// default font size for the month headers
-static const CGFloat kDefaultYearHeaderFontSize = 40;	// deafult font size for the year headers
+static const NSUInteger kYearsLoadingStep = 10;            // number of years in a loaded page = 2 * kYearsLoadingStep  + 1
+static const CGFloat kCellMinimumSpacing = 25;            // minimum distance between month cells
+static const CGFloat kDefaultDayFontSize = 13;            // default font size for the day ordinals
+static const CGFloat kDefaultMonthHeaderFontSize = 20;    // default font size for the month headers
+static const CGFloat kDefaultYearHeaderFontSize = 40;    // deafult font size for the year headers
 
-static const CGFloat kCellMinimumSpacingiPhone = 0;			// minimum distance between month cells
-static const CGFloat kDefaultDayFontSizeiPhone = 7;			// default font size for the day ordinals
-static const CGFloat kDefaultMonthHeaderFontSizeiPhone = 12;	// default font size for the month headers
-static const CGFloat kDefaultYearHeaderFontSizeiPhone = 20;	// deafult font size for the year headers
+static const CGFloat kCellMinimumSpacingiPhone = 0;            // minimum distance between month cells
+static const CGFloat kDefaultDayFontSizeiPhone = 7;            // default font size for the day ordinals
+static const CGFloat kDefaultMonthHeaderFontSizeiPhone = 12;    // default font size for the month headers
+static const CGFloat kDefaultYearHeaderFontSizeiPhone = 20;    // deafult font size for the year headers
 
 
 // forward declaration needed by YearEventsView
@@ -87,10 +87,10 @@ static const CGFloat kDefaultYearHeaderFontSizeiPhone = 20;	// deafult font size
 
 @interface MGCYearCalendarView ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MGCMonthMiniCalendarViewDelegate>
 
-@property (nonatomic, readonly) YearEventsView *eventsView;		// collection view
-@property (nonatomic, copy) NSDate *startDate;					// first loaded day in the views (always set to the first day of the year)
-@property (nonatomic) NSDate *maxStartDate;						// maximum date for the start of a loaded page of the collection view - set with dateRange, nil for infinite scrolling
-@property (nonatomic) NSDateFormatter *dateFormatter;			// used to format month and year headers
+@property (nonatomic, readonly) YearEventsView *eventsView;        // collection view
+@property (nonatomic, copy) NSDate *startDate;                    // first loaded day in the views (always set to the first day of the year)
+@property (nonatomic) NSDate *maxStartDate;                        // maximum date for the start of a loaded page of the collection view - set with dateRange, nil for infinite scrolling
+@property (nonatomic) NSDateFormatter *dateFormatter;            // used to format month and year headers
 
 @end
 
@@ -177,11 +177,11 @@ static const CGFloat kDefaultYearHeaderFontSizeiPhone = 20;	// deafult font size
     comps.year = -(2 * kYearsLoadingStep + 1);
     self.maxStartDate = [self.calendar dateByAddingComponents:comps toDate:_dateRange.end options:0];
     if ([self.maxStartDate compare:_dateRange.start] == NSOrderedAscending)
-        self.maxStartDate = _dateRange.start;
+    self.maxStartDate = _dateRange.start;
     
     // adjust startDate if not in new range
     if (![_dateRange containsDate:self.startDate])
-        self.startDate = _dateRange.start;
+    self.startDate = _dateRange.start;
     
     // reload ?
 }
@@ -272,7 +272,7 @@ static const CGFloat kDefaultYearHeaderFontSizeiPhone = 20;	// deafult font size
 {
     // check if date in range
     if (self.dateRange && ![self.dateRange containsDate:date])
-        [NSException raise:@"Invalid parameter" format:@"date %@ is not in range %@ for this calendar view", date, self.dateRange];
+    [NSException raise:@"Invalid parameter" format:@"date %@ is not in range %@ for this calendar view", date, self.dateRange];
     
     NSDate *firstInYear = [self.calendar mgc_startOfYearForDate:date];
     
@@ -296,23 +296,23 @@ static const CGFloat kDefaultYearHeaderFontSizeiPhone = 20;	// deafult font size
 // returns the distance in years between date and new start.
 - (NSUInteger)adjustStartDate:(NSDate*)date byNumberOfYears:(NSInteger)years
 {
-	NSDateComponents *comps = [NSDateComponents new];
-	comps.year = years;
-	NSDate *start = [self.calendar dateByAddingComponents:comps toDate:date options:0];
-	
-	if ([start compare:self.dateRange.start] == NSOrderedAscending)
-	{
-		start = self.dateRange.start;
-	}
-	else if ([start compare:self.maxStartDate] == NSOrderedDescending)
-	{
-		start = self.maxStartDate;
-	}
-	
-	NSUInteger diff = abs((int)[self.calendar components:NSCalendarUnitYear fromDate:start toDate:date options:0].year);
-	
-	self.startDate = start;
-	return diff;
+    NSDateComponents *comps = [NSDateComponents new];
+    comps.year = years;
+    NSDate *start = [self.calendar dateByAddingComponents:comps toDate:date options:0];
+    
+    if ([start compare:self.dateRange.start] == NSOrderedAscending)
+    {
+        start = self.dateRange.start;
+    }
+    else if ([start compare:self.maxStartDate] == NSOrderedDescending)
+    {
+        start = self.maxStartDate;
+    }
+    
+    NSUInteger diff = abs((int)[self.calendar components:NSCalendarUnitYear fromDate:start toDate:date options:0].year);
+    
+    self.startDate = start;
+    return diff;
 }
 
 // returns new corresponding offset
@@ -368,7 +368,7 @@ static const CGFloat kDefaultYearHeaderFontSizeiPhone = 20;	// deafult font size
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         
-        _eventsView = [[YearEventsView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
+        _eventsView = [[YearEventsView alloc]initWithFrame:CGRectNull collectionViewLayout:layout];
         _eventsView.yearView = self;
         _eventsView.backgroundColor = [UIColor whiteColor];
         _eventsView.dataSource = self;
@@ -438,14 +438,14 @@ static const CGFloat kDefaultYearHeaderFontSizeiPhone = 20;	// deafult font size
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView*)collectionView
 {
-	NSInteger numSections = 2 * kYearsLoadingStep + 1;
-	if (self.dateRange)
-	{
-		NSInteger diff = [self.calendar components:NSCalendarUnitYear fromDate:self.startDate toDate:self.dateRange.end options:0].year;
-		if (diff < 3 * kYearsLoadingStep + 1)
-			numSections = diff;
-	}
-	return numSections;
+    NSInteger numSections = 2 * kYearsLoadingStep + 1;
+    if (self.dateRange)
+    {
+        NSInteger diff = [self.calendar components:NSCalendarUnitYear fromDate:self.startDate toDate:self.dateRange.end options:0].year;
+        if (diff < 3 * kYearsLoadingStep + 1)
+        numSections = diff;
+    }
+    return numSections;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -537,7 +537,8 @@ static const CGFloat kDefaultYearHeaderFontSizeiPhone = 20;	// deafult font size
 
 //- (UIColor*)monthCalendar:(MonthCalendar*)calendar backgroundColorForDayAtIndex:(NSUInteger)index
 //{
-//	return [UIColor yellowColor];
+//    return [UIColor yellowColor];
 //}
 
 @end
+

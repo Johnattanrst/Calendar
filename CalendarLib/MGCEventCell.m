@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -38,46 +38,47 @@
 - (id)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-		self.visibleHeight = CGFLOAT_MAX;
-	}
+        self.visibleHeight = CGFLOAT_MAX;
+    }
     return self;
 }
 
 - (void)setEventView:(MGCEventView*)eventView
 {
-	if (eventView != _eventView) {
-		[self.eventView removeFromSuperview];
-		[self.contentView addSubview:eventView];
-		[self setNeedsLayout];
-		
-		_eventView = eventView;
-		_eventView.visibleHeight = self.visibleHeight;
-	}
+    if (eventView != _eventView) {
+        [self.eventView removeFromSuperview];
+        [self.contentView addSubview:eventView];
+        [self setNeedsLayout];
+        
+        _eventView = eventView;
+        _eventView.visibleHeight = self.visibleHeight;
+    }
 }
 
 - (void)setSelected:(BOOL)selected
 {
-	[super setSelected:selected];
-	self.eventView.selected = selected;
+    [super setSelected:selected];
+    self.eventView.selected = selected;
 }
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
 {
-	if ([layoutAttributes isKindOfClass:MGCEventCellLayoutAttributes.class]) {
-		MGCEventCellLayoutAttributes *attribs = (MGCEventCellLayoutAttributes*)layoutAttributes;
-		self.visibleHeight = attribs.visibleHeight;
-	}
+    if ([layoutAttributes isKindOfClass:MGCEventCellLayoutAttributes.class]) {
+        MGCEventCellLayoutAttributes *attribs = (MGCEventCellLayoutAttributes*)layoutAttributes;
+        self.visibleHeight = attribs.visibleHeight;
+    }
 }
 
 - (void)prepareForReuse
 {
-	[super prepareForReuse];
+    [super prepareForReuse];
 }
 
 - (void)layoutSubviews
 {
-	[super layoutSubviews];
-	self.eventView.frame = self.contentView.bounds;
+    [super layoutSubviews];
+    self.eventView.frame = self.contentView.bounds;
 }
 
 @end
+

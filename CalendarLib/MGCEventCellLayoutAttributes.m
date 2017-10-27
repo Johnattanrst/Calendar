@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -35,11 +35,11 @@
 
 - (BOOL)isEqual:(id)object
 {
-	if (![super isEqual:object])
-		return NO;
-	
-	MGCEventCellLayoutAttributes* attribs = (MGCEventCellLayoutAttributes*)object;
-	return (attribs.visibleHeight == self.visibleHeight);
+    if (![super isEqual:object])
+    return NO;
+    
+    MGCEventCellLayoutAttributes* attribs = (MGCEventCellLayoutAttributes*)object;
+    return (attribs.visibleHeight == self.visibleHeight);
 }
 
 - (id)copyWithZone:(NSZone*)zone
@@ -50,3 +50,4 @@
 }
 
 @end
+

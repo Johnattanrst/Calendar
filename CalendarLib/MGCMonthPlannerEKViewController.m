@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -35,7 +35,7 @@
 #import "NSCalendar+MGCAdditions.h"
 #import "OSCache.h"
 #import "MGCEventKitSupport.h"
-
+#import "Constant.h"
 
 static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
@@ -43,10 +43,10 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 @interface MGCMonthPlannerEKViewController ()<UINavigationControllerDelegate, EKEventEditViewDelegate, EKEventViewDelegate>
 
 @property (nonatomic) MGCEventKitSupport *eventKitSupport;
-@property (nonatomic) NSCache *cachedMonths;						// cache of events:  { month_startDate: { day: [events] } }
-@property (nonatomic) dispatch_queue_t bgQueue;						// dispatch queue for loading events
-@property (nonatomic) NSMutableOrderedSet *datesForMonthsToLoad;	// dates for months of which we want to load events
-@property (nonatomic) MGCDateRange *visibleMonths;					// range of months currently shown
+@property (nonatomic) NSCache *cachedMonths;                        // cache of events:  { month_startDate: { day: [events] } }
+@property (nonatomic) dispatch_queue_t bgQueue;                        // dispatch queue for loading events
+@property (nonatomic) NSMutableOrderedSet *datesForMonthsToLoad;    // dates for months of which we want to load events
+@property (nonatomic) MGCDateRange *visibleMonths;                    // range of months currently shown
 @property (nonatomic) EKEvent *movedEvent;
 @property (nonatomic) NSDateFormatter *dateFormatter;
 
@@ -81,12 +81,12 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     eventController.delegate = self;
     eventController.allowsEditing = YES;
     eventController.allowsCalendarPreview = YES;
-        
+    
     UINavigationController *nc = nil;
-//    if ([self.delegate respondsToSelector:@selector(dayPlannerEKViewController:navigationControllerForPresentingEventViewController:)]) {
-//        nc = [self.delegate dayPlannerEKViewController:self navigationControllerForPresentingEventViewController:eventController];
-//    }
-//    
+    //    if ([self.delegate respondsToSelector:@selector(dayPlannerEKViewController:navigationControllerForPresentingEventViewController:)]) {
+    //        nc = [self.delegate dayPlannerEKViewController:self navigationControllerForPresentingEventViewController:eventController];
+    //    }
+    //
     if (nc) {
         [nc pushViewController:eventController animated:YES];
     }
@@ -106,10 +106,38 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     }
 }
 
+- (void)showEditControllerForEvent:(EKEvent*)ev
+{
+    MGCEKEventViewController *eventController = [MGCEKEventViewController new];
+    eventController.event = ev;
+    eventController.delegate = self;
+    eventController.allowsEditing = YES;
+    eventController.allowsCalendarPreview = YES;
+    
+    UINavigationController *nc = nil;
+    
+    if (nc) {
+        [nc pushViewController:eventController animated:YES];
+    }
+    else {
+        nc = [[UINavigationController alloc]initWithRootViewController:eventController];
+        nc.modalPresentationStyle = UIModalPresentationPopover;
+        eventController.presentationController.delegate = self;
+        
+        [self showDetailViewController:nc sender:self];
+        
+        UIPopoverPresentationController *popController = nc.popoverPresentationController;
+        popController.permittedArrowDirections = UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight;
+        popController.delegate = self;
+        popController.sourceView = self.monthPlannerView;
+    }
+}
+
 - (void)showPopoverForNewEvent:(EKEvent*)ev withCell:(MGCEventView*)cell
 {
     EKEventEditViewController *eventController = [EKEventEditViewController new];
     eventController.event = ev;
+    eventController.view.backgroundColor = [UIColor darkGrayColor];
     eventController.eventStore = self.eventStore;
     eventController.editViewDelegate = self; // called only when event is deleted
     eventController.modalInPopover = YES;
@@ -251,39 +279,39 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
 - (NSDictionary*)allEventsInDateRange:(MGCDateRange*)range
 {
-	NSArray *events = [self fetchEventsFrom:range.start to:range.end calendars:nil];
-	
-	NSUInteger numDaysInRange = [range components:NSCalendarUnitDay forCalendar:self.calendar].day;
-	NSMutableDictionary *eventsPerDay = [NSMutableDictionary dictionaryWithCapacity:numDaysInRange];
-	
-	for (EKEvent *ev in events)
-	{
-		NSDate *start = [self.calendar mgc_startOfDayForDate:ev.startDate];
-		MGCDateRange *eventRange = [MGCDateRange dateRangeWithStart:start end:ev.endDate];
-		[eventRange intersectDateRange:range];
-		
-		[eventRange enumerateDaysWithCalendar:self.calendar usingBlock:^(NSDate *date, BOOL *stop){
-			NSMutableArray *events = [eventsPerDay objectForKey:date];
-			if (!events) {
-				events = [NSMutableArray array];
-				[eventsPerDay setObject:events forKey:date];
-			}
-			
-			[events addObject:ev];
-		}];
-	}
-	
-	return eventsPerDay;
+    NSArray *events = [self fetchEventsFrom:range.start to:range.end calendars:nil];
+    
+    NSUInteger numDaysInRange = [range components:NSCalendarUnitDay forCalendar:self.calendar].day;
+    NSMutableDictionary *eventsPerDay = [NSMutableDictionary dictionaryWithCapacity:numDaysInRange];
+    
+    for (EKEvent *ev in events)
+    {
+        NSDate *start = [self.calendar mgc_startOfDayForDate:ev.startDate];
+        MGCDateRange *eventRange = [MGCDateRange dateRangeWithStart:start end:ev.endDate];
+        [eventRange intersectDateRange:range];
+        
+        [eventRange enumerateDaysWithCalendar:self.calendar usingBlock:^(NSDate *date, BOOL *stop){
+            NSMutableArray *events = [eventsPerDay objectForKey:date];
+            if (!events) {
+                events = [NSMutableArray array];
+                [eventsPerDay setObject:events forKey:date];
+            }
+            
+            [events addObject:ev];
+        }];
+    }
+    
+    return eventsPerDay;
 }
 
 //- (void)cacheEvents:(NSDictionary*)events forMonthStartingAtDate:(NSDate*)date
 //{
-//	[self.cachedMonths setObject:events forKey:date];
-//	//[self.datesForMonthsToLoad removeObject:date];
-//	
-//	NSDate *rangeEnd = [self.calendar mgc_nextStartOfMonthForDate:date];
-//	MGCDateRange *range = [MGCDateRange dateRangeWithStart:date end:rangeEnd];
-//	[self.monthPlannerView reloadEventsInRange:range];
+//    [self.cachedMonths setObject:events forKey:date];
+//    //[self.datesForMonthsToLoad removeObject:date];
+//
+//    NSDate *rangeEnd = [self.calendar mgc_nextStartOfMonthForDate:date];
+//    MGCDateRange *range = [MGCDateRange dateRangeWithStart:date end:rangeEnd];
+//    [self.monthPlannerView reloadEventsInRange:range];
 //}
 
 - (void)bg_loadMonthStartingAtDate:(NSDate*)date
@@ -339,21 +367,21 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
 - (void)loadEventsIfNeeded
 {
-	[self.datesForMonthsToLoad removeAllObjects];
-	
-	MGCDateRange *visibleRange = [self visibleMonthsRange];
-	
-	NSUInteger months = [visibleRange components:NSCalendarUnitMonth forCalendar:self.calendar].month;
-	
-	for (int i = 0; i < months; i++)
-	{
-		NSDateComponents *dc = [NSDateComponents new];
-		dc.month = i;
-		NSDate *date = [self.calendar dateByAddingComponents:dc toDate:visibleRange.start options:0];
-		
-		if (![self.cachedMonths objectForKey:date])
-			[self addMonthToLoadingQueue:date];
-	}
+    [self.datesForMonthsToLoad removeAllObjects];
+    
+    MGCDateRange *visibleRange = [self visibleMonthsRange];
+    
+    NSUInteger months = [visibleRange components:NSCalendarUnitMonth forCalendar:self.calendar].month;
+    
+    for (int i = 0; i < months; i++)
+    {
+        NSDateComponents *dc = [NSDateComponents new];
+        dc.month = i;
+        NSDate *date = [self.calendar dateByAddingComponents:dc toDate:visibleRange.start options:0];
+        
+        if (![self.cachedMonths objectForKey:date])
+        [self addMonthToLoadingQueue:date];
+    }
 }
 
 #pragma mark - MGCMonthPlannerViewDataSource
@@ -380,27 +408,27 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
 - (MGCEventView*)monthPlannerView:(MGCMonthPlannerView*)view cellForEventAtIndex:(NSUInteger)index date:(NSDate *)date
 {
-	NSArray *events = [self eventsAtDate:date];
-	EKEvent *ev = [events objectAtIndex:index];
-	
-	MGCStandardEventView *evCell = nil;
-	if (ev)
-	{
-		evCell = (MGCStandardEventView*)[view dequeueReusableCellWithIdentifier:EventCellReuseIdentifier forEventAtIndex:index date:date];
-		evCell.title = ev.title;
-		evCell.subtitle = ev.location;
-		evCell.detail = [self.dateFormatter stringFromDate:ev.startDate];
-		evCell.color = [UIColor colorWithCGColor:ev.calendar.CGColor];
-		
-		NSDate *start = [self.calendar mgc_startOfDayForDate:ev.startDate];
-		NSDate *end = [self.calendar mgc_nextStartOfDayForDate:ev.endDate];
-		MGCDateRange *range = [MGCDateRange dateRangeWithStart:start end:end];
-		NSInteger numDays = [range components:NSCalendarUnitDay forCalendar:self.calendar].day;
-		
-		evCell.style = (ev.isAllDay || numDays > 1 ? MGCStandardEventViewStylePlain : MGCStandardEventViewStyleDefault|MGCStandardEventViewStyleDot);
-		evCell.style |= ev.isAllDay ?: MGCStandardEventViewStyleDetail;
-	}
-	return evCell;
+    NSArray *events = [self eventsAtDate:date];
+    EKEvent *ev = [events objectAtIndex:index];
+    
+    MGCStandardEventView *evCell = nil;
+    if (ev)
+    {
+        evCell = (MGCStandardEventView*)[view dequeueReusableCellWithIdentifier:EventCellReuseIdentifier forEventAtIndex:index date:date];
+        evCell.title = ev.title;
+        evCell.subtitle = ev.location;
+        evCell.detail = [self.dateFormatter stringFromDate:ev.startDate];
+        evCell.color = UIColorFromRGB(0xFA5C2B);//[UIColor colorWithCGColor:ev.calendar.CGColor];
+        
+        NSDate *start = [self.calendar mgc_startOfDayForDate:ev.startDate];
+        NSDate *end = [self.calendar mgc_nextStartOfDayForDate:ev.endDate];
+        MGCDateRange *range = [MGCDateRange dateRangeWithStart:start end:end];
+        NSInteger numDays = [range components:NSCalendarUnitDay forCalendar:self.calendar].day;
+        
+        evCell.style = (ev.isAllDay || numDays > 1 ? MGCStandardEventViewStylePlain : MGCStandardEventViewStyleDefault|MGCStandardEventViewStyleDot);
+        evCell.style |= ev.isAllDay ?: MGCStandardEventViewStyleDetail;
+    }
+    return evCell;
 }
 
 - (BOOL)monthPlannerView:(MGCMonthPlannerView*)view canMoveCellForEventAtIndex:(NSUInteger)index date:(NSDate*)date
@@ -416,7 +444,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     
     MGCStandardEventView *evCell = [MGCStandardEventView new];
     evCell.title = NSLocalizedString(@"New Event", nil);
-    evCell.color = [UIColor colorWithCGColor:defaultCalendar.CGColor];
+    evCell.color = UIColorFromRGB(0xFA5C2B);//[UIColor colorWithCGColor:defaultCalendar.CGColor];
     return evCell;
 }
 
@@ -542,3 +570,4 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 //}
 
 @end
+

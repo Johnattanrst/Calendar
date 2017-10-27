@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -33,7 +33,7 @@
 @class MGCCalendarHeaderView;
 
 
-/*! 
+/*!
  *  The MGCDayPlannerViewController class creates a controller object that manages a day planner view.
  */
 @interface MGCDayPlannerViewController : UIViewController <MGCDayPlannerViewDelegate, MGCDayPlannerViewDataSource>
@@ -47,3 +47,4 @@
 @property (nonatomic, assign) BOOL showsWeekHeaderView;
 
 @end
+

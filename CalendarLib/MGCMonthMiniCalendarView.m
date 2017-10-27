@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -43,8 +43,8 @@ static const CGFloat kDefaultHeaderFontSizeiPhone = 8;
 
 @interface MGCMonthMiniCalendarView ()
 
-@property (nonatomic) NSDateFormatter *dateFormatter;	// date formatter used to format month names
-@property (nonatomic, readonly) NSArray *dayLabels;		// strings for the week days symbols (M, T, W...)
+@property (nonatomic) NSDateFormatter *dateFormatter;    // date formatter used to format month names
+@property (nonatomic, readonly) NSArray *dayLabels;        // strings for the week days symbols (M, T, W...)
 
 @end
 
@@ -133,31 +133,31 @@ static const CGFloat kDefaultHeaderFontSizeiPhone = 8;
 
 - (NSUInteger)firstDayColumn
 {
-	NSDate *firstDayInMonth = [self.calendar mgc_startOfMonthForDate:self.date];
-	NSUInteger weekday = [self.calendar components:NSCalendarUnitWeekday fromDate:firstDayInMonth].weekday;
-	NSUInteger numDaysInWeek = [self.calendar maximumRangeOfUnit:NSCalendarUnitWeekday].length;
-	// zero-based, 0 is the first day of week of current calendar
-	weekday = (weekday + numDaysInWeek - self.calendar.firstWeekday) % numDaysInWeek;
-	return weekday;
+    NSDate *firstDayInMonth = [self.calendar mgc_startOfMonthForDate:self.date];
+    NSUInteger weekday = [self.calendar components:NSCalendarUnitWeekday fromDate:firstDayInMonth].weekday;
+    NSUInteger numDaysInWeek = [self.calendar maximumRangeOfUnit:NSCalendarUnitWeekday].length;
+    // zero-based, 0 is the first day of week of current calendar
+    weekday = (weekday + numDaysInWeek - self.calendar.firstWeekday) % numDaysInWeek;
+    return weekday;
 }
 
 #pragma mark - Methods
 
 - (CGSize)preferredSizeYearWise:(BOOL)yearWise
 {
-	CGSize daySize = [@"00" sizeWithAttributes:@{ NSFontAttributeName:self.daysFont }];
-	CGFloat dayCellSize = MAX(daySize.width, daySize.height);
-	CGFloat space = dayCellSize / 2.;
-	
-	NSUInteger numCols = self.dayLabels.count;
-	NSUInteger numRows = self.showsDayHeader ? 1 : 0;
-	if (yearWise)
-		numRows += [self.calendar maximumRangeOfUnit:NSCalendarUnitWeekOfMonth].length;
-	else
-		numRows += [self.calendar rangeOfUnit:NSCalendarUnitWeekOfMonth inUnit:NSCalendarUnitMonth forDate:self.date].length;
-	
-	CGSize viewSize = CGSizeMake(numCols * dayCellSize + (numCols - 1) * space, numRows * dayCellSize + (numRows - 1) * space);
-	
+    CGSize daySize = [@"00" sizeWithAttributes:@{ NSFontAttributeName:self.daysFont }];
+    CGFloat dayCellSize = MAX(daySize.width, daySize.height);
+    CGFloat space = dayCellSize / 2.;
+    
+    NSUInteger numCols = self.dayLabels.count;
+    NSUInteger numRows = self.showsDayHeader ? 1 : 0;
+    if (yearWise)
+    numRows += [self.calendar maximumRangeOfUnit:NSCalendarUnitWeekOfMonth].length;
+    else
+    numRows += [self.calendar rangeOfUnit:NSCalendarUnitWeekOfMonth inUnit:NSCalendarUnitMonth forDate:self.date].length;
+    
+    CGSize viewSize = CGSizeMake(numCols * dayCellSize + (numCols - 1) * space, numRows * dayCellSize + (numRows - 1) * space);
+    
     if (self.showsMonthHeader)
     {
         CGRect headerRect = [self.headerText boundingRectWithSize:CGSizeMake(viewSize.width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
@@ -205,11 +205,11 @@ static const CGFloat kDefaultHeaderFontSizeiPhone = 8;
 
 - (void)drawRect:(CGRect)rect
 {
-	// calc sizes
-	CGSize daySize = [@"00" sizeWithAttributes:@{ NSFontAttributeName:self.daysFont }];
-	CGFloat dayCellSize = MAX(daySize.width, daySize.height);
-	CGFloat space = dayCellSize / 2.;
-
+    // calc sizes
+    CGSize daySize = [@"00" sizeWithAttributes:@{ NSFontAttributeName:self.daysFont }];
+    CGFloat dayCellSize = MAX(daySize.width, daySize.height);
+    CGFloat space = dayCellSize / 2.;
+    
     if (isiPad) {
         //NSLog(@"---------------- iPAD ------------------");
         rect = CGRectInset(rect, kMonthMargin, kMonthMargin);
@@ -218,85 +218,86 @@ static const CGFloat kDefaultHeaderFontSizeiPhone = 8;
         //NSLog(@"---------------- iPhone ------------------");
         rect = CGRectInset(rect, kMonthMarginiPhone, kMonthMarginiPhone);
     }
-	
-	// draw month header
-	if (self.showsMonthHeader)
-	{
-		CGRect headerRect = [self.headerText boundingRectWithSize:rect.size options:NSStringDrawingUsesLineFragmentOrigin context:nil];
-		[self.headerText drawInRect:rect];
-		
-		rect.origin.y += headerRect.size.height + space;
-		rect.size.height -= headerRect.size.height + space;
-	}
-	
-	CGFloat x = rect.origin.x, y = rect.origin.y;
-	
-	
-	// draw days header
-	if (self.showsDayHeader)
-	{
-		NSMutableParagraphStyle *para = [NSMutableParagraphStyle new];
-		para.alignment = NSTextAlignmentCenter;
-		para.lineBreakMode = NSLineBreakByCharWrapping;
-				
-		for (int i = 0; i < self.dayLabels.count; i++)
-		{
-			NSString *s = [self.dayLabels objectAtIndex:i];
-			CGRect cellRect = CGRectMake(x, rect.origin.y, dayCellSize, dayCellSize);
-			[s drawInRect:cellRect withAttributes:@{ NSFontAttributeName:self.daysFont, NSParagraphStyleAttributeName:para }];
-			x += dayCellSize + space;
-		}
-		
-		y += dayCellSize;
-		
-		UIBezierPath *line = [UIBezierPath bezierPathWithRect:CGRectMake(rect.origin.x, y + 2., rect.size.width, .1)];
-		[line fill];
-		
-		y += space;
-	}
-	
-	
-	// draw day cells
-	NSDate *firstDayInMonth = [self.calendar mgc_startOfMonthForDate:self.date];
-	NSUInteger days = [self.calendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:firstDayInMonth].length;
-	NSUInteger firstCol = [self firstDayColumn];
-	
-	x = rect.origin.x + firstCol * (dayCellSize + space);
-	
-	for (NSUInteger i = 1, col = firstCol; i <= days; i++, col++)
-	{
-		if (col == self.dayLabels.count)
-		{
-			col = 0;
-			x = rect.origin.x;
-			y += dayCellSize + space;
-		}
-		
-		CGRect cellRect = CGRectMake(x, y, dayCellSize, dayCellSize);
-		CGRect boxRect = CGRectInset(cellRect, -space / 2 + 1, -space / 2 + 1);
-		
-		UIColor *bkgColor = nil;
-		if ([self.delegate respondsToSelector:@selector(monthMiniCalendarView:backgroundColorForDayAtIndex:)])
-			bkgColor = [self.delegate monthMiniCalendarView:self backgroundColorForDayAtIndex:i];
-		
-		if (bkgColor)
-		{
-			[bkgColor setFill];
-			UIRectFill(boxRect);
-		}
-		
-		if ([self.highlightedDays containsIndex:i])
-		{
-			UIBezierPath* p = [UIBezierPath bezierPathWithOvalInRect:boxRect];
-			[self.highlightColor setFill];
-			[p fill];
-		}
-		
-		NSMutableAttributedString *as = [self textForDayAtIndex:i cellColor:bkgColor];
-		[as drawInRect:cellRect];
-		
-		x += cellRect.size.width + space;
-	}
+    
+    // draw month header
+    if (self.showsMonthHeader)
+    {
+        CGRect headerRect = [self.headerText boundingRectWithSize:rect.size options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+        [self.headerText drawInRect:rect];
+        
+        rect.origin.y += headerRect.size.height + space;
+        rect.size.height -= headerRect.size.height + space;
+    }
+    
+    CGFloat x = rect.origin.x, y = rect.origin.y;
+    
+    
+    // draw days header
+    if (self.showsDayHeader)
+    {
+        NSMutableParagraphStyle *para = [NSMutableParagraphStyle new];
+        para.alignment = NSTextAlignmentCenter;
+        para.lineBreakMode = NSLineBreakByCharWrapping;
+        
+        for (int i = 0; i < self.dayLabels.count; i++)
+        {
+            NSString *s = [self.dayLabels objectAtIndex:i];
+            CGRect cellRect = CGRectMake(x, rect.origin.y, dayCellSize, dayCellSize);
+            [s drawInRect:cellRect withAttributes:@{ NSFontAttributeName:self.daysFont, NSParagraphStyleAttributeName:para }];
+            x += dayCellSize + space;
+        }
+        
+        y += dayCellSize;
+        
+        UIBezierPath *line = [UIBezierPath bezierPathWithRect:CGRectMake(rect.origin.x, y + 2., rect.size.width, .1)];
+        [line fill];
+        
+        y += space;
+    }
+    
+    
+    // draw day cells
+    NSDate *firstDayInMonth = [self.calendar mgc_startOfMonthForDate:self.date];
+    NSUInteger days = [self.calendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:firstDayInMonth].length;
+    NSUInteger firstCol = [self firstDayColumn];
+    
+    x = rect.origin.x + firstCol * (dayCellSize + space);
+    
+    for (NSUInteger i = 1, col = firstCol; i <= days; i++, col++)
+    {
+        if (col == self.dayLabels.count)
+        {
+            col = 0;
+            x = rect.origin.x;
+            y += dayCellSize + space;
+        }
+        
+        CGRect cellRect = CGRectMake(x, y, dayCellSize, dayCellSize);
+        CGRect boxRect = CGRectInset(cellRect, -space / 2 + 1, -space / 2 + 1);
+        
+        UIColor *bkgColor = nil;
+        if ([self.delegate respondsToSelector:@selector(monthMiniCalendarView:backgroundColorForDayAtIndex:)])
+        bkgColor = [self.delegate monthMiniCalendarView:self backgroundColorForDayAtIndex:i];
+        
+        if (bkgColor)
+        {
+            [bkgColor setFill];
+            UIRectFill(boxRect);
+        }
+        
+        if ([self.highlightedDays containsIndex:i])
+        {
+            UIBezierPath* p = [UIBezierPath bezierPathWithOvalInRect:boxRect];
+            [self.highlightColor setFill];
+            [p fill];
+        }
+        
+        NSMutableAttributedString *as = [self textForDayAtIndex:i cellColor:bkgColor];
+        [as drawInRect:cellRect];
+        
+        x += cellRect.size.width + space;
+    }
 }
 
 @end
+

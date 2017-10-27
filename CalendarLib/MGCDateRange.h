@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -50,3 +50,4 @@
 - (void)enumerateDaysWithCalendar:(NSCalendar*)calendar usingBlock:(void (^)(NSDate *day, BOOL *stop))block;
 
 @end
+

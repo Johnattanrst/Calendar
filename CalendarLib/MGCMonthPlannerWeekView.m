@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -40,27 +40,27 @@
 - (id)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-		self.backgroundColor = [UIColor clearColor];
-	}
+        self.backgroundColor = [UIColor clearColor];
+    }
     return self;
 }
 
 - (void)setEventsView:(MGCEventsRowView*)eventsView
 {
-	NSUInteger z = NSNotFound;
-	if (_eventsView) {
-		z = [self.subviews indexOfObject:_eventsView];
-	}
-
-	if (z == NSNotFound) {
-		//eventsView.frame = self.bounds;
-		[self addSubview:eventsView];
-	}
-	else {
-		[_eventsView removeFromSuperview];
-		[self insertSubview:eventsView atIndex:z];
-	}
-	_eventsView = eventsView;
+    NSUInteger z = NSNotFound;
+    if (_eventsView) {
+        z = [self.subviews indexOfObject:_eventsView];
+    }
+    
+    if (z == NSNotFound) {
+        //eventsView.frame = self.bounds;
+        [self addSubview:eventsView];
+    }
+    else {
+        [_eventsView removeFromSuperview];
+        [self insertSubview:eventsView atIndex:z];
+    }
+    _eventsView = eventsView;
 }
 
 -(UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event
@@ -75,8 +75,8 @@
 
 - (void)layoutSubviews
 {
-	[super layoutSubviews];
-	self.eventsView.frame = self.bounds;
+    [super layoutSubviews];
+    self.eventsView.frame = self.bounds;
 }
 
 @end

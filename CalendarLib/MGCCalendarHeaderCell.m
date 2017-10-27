@@ -6,6 +6,7 @@
 //
 
 #import "MGCCalendarHeaderCell.h"
+#import "Constant.h"
 
 @interface MGCCalendarHeaderCell ()
 
@@ -26,10 +27,10 @@
 - (instancetype)initWithCoder:(NSCoder*)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    if (self) {        
-        self.selectedDayBackgroundColor = [UIColor darkGrayColor];
-        self.selectedDayTextColor = [UIColor whiteColor];
-        self.todayColor = [UIColor redColor];
+    if (self) {
+        self.selectedDayBackgroundColor = [UIColor clearColor];//UIColorFromRGB(0x474A4F);//[UIColor darkGrayColor];
+        self.selectedDayTextColor = [UIColor lightGrayColor];
+        self.todayColor = UIColorFromRGB(0xFA5C2B);//[UIColor redColor];
         self.weekendColor = [UIColor grayColor];
     }
     return self;
@@ -70,13 +71,16 @@
     
     if (self.isSelected) {
         self.dayNumberLabel.backgroundColor = self.selectedDayBackgroundColor;
+        self.dayNumberLabel.layer.borderWidth = 1;
+        self.dayNumberLabel.layer.borderColor = self.todayColor.CGColor;
         self.dayNumberLabel.layer.masksToBounds = YES;
         self.dayNumberLabel.layer.cornerRadius = 15.0;
         self.dayNumberLabel.textColor = self.selectedDayTextColor;
     }
     else {
         self.dayNumberLabel.backgroundColor = [UIColor clearColor];
-        self.dayNumberLabel.textColor = self.selectedDayBackgroundColor;
+        self.dayNumberLabel.textColor = [UIColor lightGrayColor];
+        self.dayNumberLabel.layer.borderWidth = 0;
     }
     
     if (self.isToday) {
@@ -92,15 +96,17 @@
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-
-    self.dayNameLabel.textColor = [UIColor blackColor];
-    self.dayNumberLabel.textColor = [UIColor blackColor];
+    
+    self.dayNameLabel.textColor = [UIColor lightGrayColor];
+    self.dayNumberLabel.textColor = [UIColor lightGrayColor];
     self.today = NO;
     self.weekend = NO;
-    self.selectedDayBackgroundColor = [UIColor darkGrayColor];
-    self.selectedDayTextColor = [UIColor whiteColor];
-    self.todayColor = [UIColor redColor];
+    self.selectedDayBackgroundColor = [UIColor clearColor];//UIColorFromRGB(0x474A4F);
+    self.selectedDayTextColor = [UIColor lightGrayColor];
+    self.todayColor = UIColorFromRGB(0xFA5C2B);
     self.weekendColor = [UIColor grayColor];
+    self.dayNumberLabel.layer.borderWidth = 0;
 }
 
 @end
+

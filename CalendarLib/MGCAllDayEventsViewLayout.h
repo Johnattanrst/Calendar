@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -35,9 +35,9 @@ static NSString* const MoreEventsViewKind = @"MoreEventsViewKind";
 
 typedef enum : NSUInteger
 {
-	AllDayEventInsetNone = 0,
-	AllDayEventInsetLeft  = 1 << 0,
-	AllDayEventInsetRight = 1 << 1,
+    AllDayEventInsetNone = 0,
+    AllDayEventInsetLeft  = 1 << 0,
+    AllDayEventInsetRight = 1 << 1,
 } AllDayEventInset;
 
 
@@ -49,9 +49,9 @@ typedef enum : NSUInteger
 @interface MGCAllDayEventsViewLayout : UICollectionViewLayout
 
 @property (nonatomic, weak) id<MGCAllDayEventsViewLayoutDelegate> delegate;
-@property (nonatomic) CGFloat dayColumnWidth;		// width of columns
-@property (nonatomic) CGFloat eventCellHeight;		// height of an event cell
-@property (nonatomic) CGFloat maxContentHeight;		// if the total content height, defined by the sum of the height of all stacked cells, is more than this value, then some cells will be hidden and a view at the bottom will indicate the number of hidden events
+@property (nonatomic) CGFloat dayColumnWidth;        // width of columns
+@property (nonatomic) CGFloat eventCellHeight;        // height of an event cell
+@property (nonatomic) CGFloat maxContentHeight;        // if the total content height, defined by the sum of the height of all stacked cells, is more than this value, then some cells will be hidden and a view at the bottom will indicate the number of hidden events
 
 - (NSUInteger)numberOfHiddenEventsInSection:(NSInteger)section;
 
@@ -67,3 +67,4 @@ typedef enum : NSUInteger
 - (AllDayEventInset)collectionView:(UICollectionView*)view layout:(MGCAllDayEventsViewLayout*)layout insetsForEventAtIndexPath:(NSIndexPath*)indexPath;
 
 @end
+

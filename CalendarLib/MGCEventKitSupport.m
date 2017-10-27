@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -69,17 +69,17 @@
     EKAuthorizationStatus status = [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
     
     switch (status) {
-        case EKAuthorizationStatusAuthorized:
+            case EKAuthorizationStatusAuthorized:
             [self accessGrantedForCalendar];
             completion(YES);
             break;
             
-        case EKAuthorizationStatusNotDetermined:
+            case EKAuthorizationStatusNotDetermined:
             [self requestCalendarAccess:completion];
             break;
             
-        case EKAuthorizationStatusDenied:
-        case EKAuthorizationStatusRestricted:
+            case EKAuthorizationStatusDenied:
+            case EKAuthorizationStatusRestricted:
             [self accessDeniedForCalendar];
             completion(NO);
     }
@@ -203,3 +203,4 @@
 }
 
 @end
+

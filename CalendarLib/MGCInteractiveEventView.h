@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -36,7 +36,8 @@
 // If permitted, the view can be dragged around in order to move the event.
 @interface MGCInteractiveEventView : UIView
 
-@property (nonatomic) MGCEventView *eventView;		// event view - this is a copy of the view that was tapped
-@property (nonatomic) BOOL forbiddenSignVisible;	// set to YES to show a prohibited sign above the view. It indicates the event cannot be moved to that date or time.
+@property (nonatomic) MGCEventView *eventView;        // event view - this is a copy of the view that was tapped
+@property (nonatomic) BOOL forbiddenSignVisible;    // set to YES to show a prohibited sign above the view. It indicates the event cannot be moved to that date or time.
 
 @end
+

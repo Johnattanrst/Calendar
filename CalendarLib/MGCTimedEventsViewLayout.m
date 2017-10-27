@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -77,26 +77,26 @@ static NSString* const EventCellsKey = @"EventCellsKey";
 @implementation MGCTimedEventsViewLayout
 
 - (instancetype)init {
-	if (self = [super init]) {
-		_minimumVisibleHeight = 15.;
+    if (self = [super init]) {
+        _minimumVisibleHeight = 15.;
         _ignoreNextInvalidation = NO;
-	}
-	return self;
+    }
+    return self;
 }
 
 - (NSMutableDictionary*)layoutInfo
 {
-	if (!_layoutInfo) {
-		NSInteger numSections = self.collectionView.numberOfSections;
-		_layoutInfo = [NSMutableDictionary dictionaryWithCapacity:numSections];
-	}
-	return _layoutInfo;
+    if (!_layoutInfo) {
+        NSInteger numSections = self.collectionView.numberOfSections;
+        _layoutInfo = [NSMutableDictionary dictionaryWithCapacity:numSections];
+    }
+    return _layoutInfo;
 }
 
 - (NSArray*)layoutAttributesForDimmingViewsInSection:(NSUInteger)section
 {
     NSArray *dimmingRects = [self.delegate collectionView:self.collectionView layout:self dimmingRectsForSection:section];
-
+    
     NSMutableArray *layoutAttribs = [NSMutableArray arrayWithCapacity:dimmingRects.count];
     
     for (NSInteger item = 0; item < dimmingRects.count; item++) {
@@ -109,7 +109,7 @@ static NSString* const EventCellsKey = @"EventCellsKey";
             rect.size.width = self.dayColumnSize.width;
             
             viewAttribs.frame = MGCAlignedRect(rect);
-        
+            
             [layoutAttribs addObject:viewAttribs];
         }
     }
@@ -162,7 +162,7 @@ static NSString* const EventCellsKey = @"EventCellsKey";
     }
     
     [self.layoutInfo setObject:sectionAttribs forKey:@(section)];
-   
+    
     return sectionAttribs;
 }
 
@@ -180,7 +180,7 @@ static NSString* const EventCellsKey = @"EventCellsKey";
         }
         return NSOrderedSame;
     }];
-
+    
     if (self.coveringType == TimedEventCoveringTypeClassic) {
         
         for (NSUInteger i = 0; i < adjustedAttributes.count; i++) {
@@ -209,7 +209,7 @@ static NSString* const EventCellsKey = @"EventCellsKey";
                 }
             }
             
-
+            
             // now, distribute elements in layout group
             CGFloat groupOffset = 0;
             if (coveredLayoutAttributes.count > 0) {
@@ -328,7 +328,7 @@ static NSString* const EventCellsKey = @"EventCellsKey";
     }
     
     CGFloat totalWidth = self.dayColumnSize.width - 2.f;
-
+    
     for (NSInteger i = 0; i < maxRowCount; i++) {
         // Set the x position of the rect
         NSInteger j = 0;
@@ -350,7 +350,7 @@ static NSString* const EventCellsKey = @"EventCellsKey";
 
 + (Class)layoutAttributesClass
 {
-	return [MGCEventCellLayoutAttributes class];
+    return [MGCEventCellLayoutAttributes class];
 }
 
 + (Class)invalidationContextClass
@@ -360,10 +360,10 @@ static NSString* const EventCellsKey = @"EventCellsKey";
 
 - (MGCEventCellLayoutAttributes*)layoutAttributesForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-	//NSLog(@"layoutAttributesForItemAtIndexPath %@", indexPath);
-	
-	NSArray *attribs = [[self layoutAttributesForSection:indexPath.section] objectForKey:EventCellsKey];
-	return [attribs objectAtIndex:indexPath.item];
+    //NSLog(@"layoutAttributesForItemAtIndexPath %@", indexPath);
+    
+    NSArray *attribs = [[self layoutAttributesForSection:indexPath.section] objectForKey:EventCellsKey];
+    return [attribs objectAtIndex:indexPath.item];
 }
 
 - (UICollectionViewLayoutAttributes*)layoutAttributesForSupplementaryViewOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
@@ -374,9 +374,9 @@ static NSString* const EventCellsKey = @"EventCellsKey";
 
 - (void)prepareForCollectionViewUpdates:(NSArray*)updateItems
 {
-	//NSLog(@"prepare Collection updates");
-	
-	[super prepareForCollectionViewUpdates:updateItems];
+    //NSLog(@"prepare Collection updates");
+    
+    [super prepareForCollectionViewUpdates:updateItems];
 }
 
 - (void)invalidateLayoutWithContext:(MGCTimedEventsViewLayoutInvalidationContext *)context
@@ -408,50 +408,50 @@ static NSString* const EventCellsKey = @"EventCellsKey";
 
 - (void)invalidateLayout
 {
-	//NSLog(@"invalidateLayout");
+    //NSLog(@"invalidateLayout");
     
     [super invalidateLayout];
 }
 
 - (CGSize)collectionViewContentSize
 {
-	return CGSizeMake(self.dayColumnSize.width * self.collectionView.numberOfSections, self.dayColumnSize.height);
+    return CGSizeMake(self.dayColumnSize.width * self.collectionView.numberOfSections, self.dayColumnSize.height);
 }
 
 - (NSArray*)layoutAttributesForElementsInRect:(CGRect)rect
 {
-	//NSLog(@"layoutAttributesForElementsInRect %@", NSStringFromCGRect(rect));
+    //NSLog(@"layoutAttributesForElementsInRect %@", NSStringFromCGRect(rect));
     
 #ifdef BUG_FIX
-	self.shouldInvalidate = self.visibleBounds.origin.y != rect.origin.y || self.visibleBounds.size.height != rect.size.height;
-	//self.shouldInvalidate = !CGRectEqualToRect(self.visibleBounds, rect);
-	self.visibleBounds = rect;
+    self.shouldInvalidate = self.visibleBounds.origin.y != rect.origin.y || self.visibleBounds.size.height != rect.size.height;
+    //self.shouldInvalidate = !CGRectEqualToRect(self.visibleBounds, rect);
+    self.visibleBounds = rect;
 #endif
-	
-	NSMutableArray *allAttribs = [NSMutableArray array];
-	
-	// determine first and last day intersecting rect
-	NSUInteger maxSection = self.collectionView.numberOfSections;
-	NSUInteger first = MAX(0, floorf(rect.origin.x  / self.dayColumnSize.width));
+    
+    NSMutableArray *allAttribs = [NSMutableArray array];
+    
+    // determine first and last day intersecting rect
+    NSUInteger maxSection = self.collectionView.numberOfSections;
+    NSUInteger first = MAX(0, floorf(rect.origin.x  / self.dayColumnSize.width));
     NSUInteger last =  MIN(MAX(first, ceilf(CGRectGetMaxX(rect) / self.dayColumnSize.width)), maxSection);
     
-	for (NSInteger day = first; day < last; day++) {
-		NSDictionary *layoutDic = [self layoutAttributesForSection:day];
+    for (NSInteger day = first; day < last; day++) {
+        NSDictionary *layoutDic = [self layoutAttributesForSection:day];
         NSArray *attribs = [[layoutDic objectForKey:DimmingViewsKey]arrayByAddingObjectsFromArray:[layoutDic objectForKey:EventCellsKey]];
         
-		for (UICollectionViewLayoutAttributes *a in attribs) {
-			if (CGRectIntersectsRect(rect, a.frame)) {
+        for (UICollectionViewLayoutAttributes *a in attribs) {
+            if (CGRectIntersectsRect(rect, a.frame)) {
 #ifdef BUG_FIX
-				CGRect frame = a.frame;
-				frame.size.height = fminf(frame.size.height, CGRectGetMaxY(rect) - frame.origin.y);
-				a.frame = frame;
+                CGRect frame = a.frame;
+                frame.size.height = fminf(frame.size.height, CGRectGetMaxY(rect) - frame.origin.y);
+                a.frame = frame;
 #endif
-				[allAttribs addObject:a];
-			}
-		}
-	}
-
-	return allAttribs;
+                [allAttribs addObject:a];
+            }
+        }
+    }
+    
+    return allAttribs;
 }
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
@@ -462,9 +462,9 @@ static NSString* const EventCellsKey = @"EventCellsKey";
     
     return
 #ifdef BUG_FIX
-        self.shouldInvalidate ||
+    self.shouldInvalidate ||
 #endif
-        oldBounds.size.width != newBounds.size.width;
+    oldBounds.size.width != newBounds.size.width;
 }
 
 // we keep this for iOS 8 compatibility. As of iOS 9, this is replaced by collectionView:targetContentOffsetForProposedContentOffset:

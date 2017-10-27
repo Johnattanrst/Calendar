@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -79,205 +79,205 @@ typedef NS_ENUM(NSUInteger, MGCMonthPlannerScrollAlignment) {
 
 
 /*!
-	@group Configuration and appearance customization
+ @group Configuration and appearance customization
  */
 
 
 /*!
-	@abstract	The calendar used for formatting the months and dates.
-	@discussion The default value is the logical calendar for the current user (as returned by `[NSCalendar currentCalendar]`)
+ @abstract    The calendar used for formatting the months and dates.
+ @discussion The default value is the logical calendar for the current user (as returned by `[NSCalendar currentCalendar]`)
  */
 @property (nonatomic) NSCalendar *calendar;
 
 /*!
-	@abstract	Returns the height of a row of days in the month planner view.
-	@discussion The default value is 140.
+ @abstract    Returns the height of a row of days in the month planner view.
+ @discussion The default value is 140.
  */
 @property (nonatomic) CGFloat rowHeight;
 
 /*!
-	@abstract	Returns the height of the header showing days of week.
-	@discussion The default value is 35.
-				It can be set to 0 to hide the header.
+ @abstract    Returns the height of the header showing days of week.
+ @discussion The default value is 35.
+ It can be set to 0 to hide the header.
  */
 @property (nonatomic) CGFloat headerHeight;
 
 /*!
-	@abstract	Returns the height of the header in day cells which displays the date.
-	@discussion The default value is 30.
+ @abstract    Returns the height of the header in day cells which displays the date.
+ @discussion The default value is 30.
  */
 @property (nonatomic) CGFloat dayCellHeaderHeight;
 
 /*!
-	@abstract	The distance between each months and between the months and the edge of the view.
+ @abstract    The distance between each months and between the months and the edge of the view.
  */
 @property (nonatomic) UIEdgeInsets monthInsets;
 
 /*!
-	@abstract	Returns the style for the months headers.
-	@discussion If set to MGCMonthHeaderStyleDefault, the header displays the month name and the year.
-                If set to MGCMonthHeaderStyleShort, the header only displays the month name.
-                If set to MGCMonthHeaderStyleHidden, the header is hidden
-    @discussion The alignment of the header changes depending on the value of the gridStyle property.
-    @see        gridStyle
+ @abstract    Returns the style for the months headers.
+ @discussion If set to MGCMonthHeaderStyleDefault, the header displays the month name and the year.
+ If set to MGCMonthHeaderStyleShort, the header only displays the month name.
+ If set to MGCMonthHeaderStyleHidden, the header is hidden
+ @discussion The alignment of the header changes depending on the value of the gridStyle property.
+ @see        gridStyle
  
  */
 @property (nonatomic) MGCMonthHeaderStyle monthHeaderStyle;
 
 /*!
-	@abstract	Returns the style of the month planner view.
-    @discussion If set to MGCMonthPlannerStyleEvents, the view displays events cells, similar to the month view in Apple's Calendar app on iPad.
-                If set to MGCMonthPlannerStyleDots, the view only displays dots for days with events, similar to the month view in Apple's Calendar app on iPhone.
-                If set to MGCMonthPlannerStyleEmpty, the view does not display events nor dots.
-	@discussion The default value is MGCMonthPlannerStyleEvents on regular horizontal size, MGCMonthPlannerStyleDots otherwise.
+ @abstract    Returns the style of the month planner view.
+ @discussion If set to MGCMonthPlannerStyleEvents, the view displays events cells, similar to the month view in Apple's Calendar app on iPad.
+ If set to MGCMonthPlannerStyleDots, the view only displays dots for days with events, similar to the month view in Apple's Calendar app on iPhone.
+ If set to MGCMonthPlannerStyleEmpty, the view does not display events nor dots.
+ @discussion The default value is MGCMonthPlannerStyleEvents on regular horizontal size, MGCMonthPlannerStyleDots otherwise.
  */
 @property (nonatomic) MGCMonthPlannerStyle style;
 
 /*!
-	@abstract	Returns the color of the dot displayed when the month planner view style is set to MGCMonthPlannerStyleDots.
+ @abstract    Returns the color of the dot displayed when the month planner view style is set to MGCMonthPlannerStyleDots.
  */
 @property (nonatomic) UIColor *eventsDotColor;
 
 /*!
-	@abstract	Returns the style of the months' background grid.
-    @discussion If MGCMonthPlannerGridStyleFill is set, the view fills the grid for the first and last week of the month, and the month header, if displayed, is center-aligned.
-                Otherwise, the grid covers only the days of the months, and the month header, if displayed, is aligned on the first day.
-*/
+ @abstract    Returns the style of the months' background grid.
+ @discussion If MGCMonthPlannerGridStyleFill is set, the view fills the grid for the first and last week of the month, and the month header, if displayed, is center-aligned.
+ Otherwise, the grid covers only the days of the months, and the month header, if displayed, is aligned on the first day.
+ */
 @property (nonatomic) MGCMonthPlannerGridStyle gridStyle;
 
 /*!
-	@abstract	String format for dates displayed on top of day cells.
-	@discussion If the value of this property is nil, a default format is used according to the current locale.
-	@see		NSDateFormatter dateFormat
-    @see        monthPlannerView:attributedStringForDayHeaderAtDate: delegate method
+ @abstract    String format for dates displayed on top of day cells.
+ @discussion If the value of this property is nil, a default format is used according to the current locale.
+ @see        NSDateFormatter dateFormat
+ @see        monthPlannerView:attributedStringForDayHeaderAtDate: delegate method
  */
 @property (nonatomic, copy) NSString *dateFormat;
 
 /*!
-	@abstract	Returns the height of event cells.
-	@discussion The default value is 16.
+ @abstract    Returns the height of event cells.
+ @discussion The default value is 16.
  */
 @property (nonatomic) CGFloat itemHeight;
 
 /*!
-	@abstract	Background color for the whole calendar.
-	@discussion The default color is white.
+ @abstract    Background color for the whole calendar.
+ @discussion The default color is white.
  */
 @property (nonatomic, strong) UIColor *calendarBackgroundColor;
 
 /*!
-	@abstract	Background color for weekday cells.
-	@discussion The default color is white.
+ @abstract    Background color for weekday cells.
+ @discussion The default color is white.
  */
 @property (nonatomic, strong) UIColor *weekDayBackgroundColor;
 
 /*!
-	@abstract	Background color for weekend day cells.
-	@discussion The default color is light transparent gray.
+ @abstract    Background color for weekend day cells.
+ @discussion The default color is light transparent gray.
  */
 @property (nonatomic, strong) UIColor *weekendDayBackgroundColor;
 
 /*!
-	@abstract	Text color for the weekday headers on the top of the view.
-	@discussion The default color is black.
+ @abstract    Text color for the weekday headers on the top of the view.
+ @discussion The default color is black.
  */
 @property (nonatomic, strong) UIColor *weekdaysLabelTextColor;
 
 /*!
-	@abstract	Font used for the weekday headers.
+ @abstract    Font used for the weekday headers.
  */
 @property (nonatomic, strong) UIFont *weekdaysLabelFont;
 
 /*!
-	@abstract	Array of strings displayed for the weekday headers.
-    @discussion String at index 0 is for Sunday
-    @discussion If set to nil, default weekday abbreviations are used (like Mon. or M for Monday, depending of the available size)
+ @abstract    Array of strings displayed for the weekday headers.
+ @discussion String at index 0 is for Sunday
+ @discussion If set to nil, default weekday abbreviations are used (like Mon. or M for Monday, depending of the available size)
  */
 @property (nonatomic, strong) NSArray *weekDaysStringArray;
 
 /*!
-	@abstract	Text color for the month headers.
-	@discussion The default color is black.
-    @see        monthHeaderStyle
+ @abstract    Text color for the month headers.
+ @discussion The default color is black.
+ @see        monthHeaderStyle
  */
 @property (nonatomic, strong) UIColor *monthLabelTextColor;
 
 /*!
-	@abstract	Font used for the month headers.
-    @discussion default is [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline]
-    @see        monthHeaderStyle
+ @abstract    Font used for the month headers.
+ @discussion default is [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline]
+ @see        monthHeaderStyle
  */
 @property (nonatomic, strong) UIFont *monthLabelFont;
 
 /*!
-	@abstract	Determines whether an event can be created with a long-press on the view.
-	@discussion The default value is YES. This has no effect if the style property of the view is not set to MGCMonthPlannerStyleEvents.
+ @abstract    Determines whether an event can be created with a long-press on the view.
+ @discussion The default value is YES. This has no effect if the style property of the view is not set to MGCMonthPlannerStyleEvents.
  */
 @property (nonatomic) BOOL canCreateEvents;
 
 /*!
-	@abstract	Determines whether an event can be moved around after a long-press on the view.
-	@discussion The default value is YES. This has no effect if the style property of the view is not set to MGCMonthPlannerStyleEvents.
+ @abstract    Determines whether an event can be moved around after a long-press on the view.
+ @discussion The default value is YES. This has no effect if the style property of the view is not set to MGCMonthPlannerStyleEvents.
  */
 @property (nonatomic) BOOL canMoveEvents;
 
 /*!
-	@abstract	The object that provides the data for the month planner view
-	@discussion The data source must adopt the `MGCMonthPlannerViewDataSource` protocol.
-				The month planner view view maintains a weak reference to the data source object.
+ @abstract    The object that provides the data for the month planner view
+ @discussion The data source must adopt the `MGCMonthPlannerViewDataSource` protocol.
+ The month planner view view maintains a weak reference to the data source object.
  */
 @property (nonatomic, weak) id<MGCMonthPlannerViewDataSource> dataSource;
 
 /*!
-	@abstract	The object acting as the delegate of the month planner View.
-	@discussion The delegate must adopt the `MGCMonthPlannerViewDelegate` protocol. 
-				The Calendar View maintains a weak reference to the delegate object.
+ @abstract    The object acting as the delegate of the month planner View.
+ @discussion The delegate must adopt the `MGCMonthPlannerViewDelegate` protocol.
+ The Calendar View maintains a weak reference to the delegate object.
  */
 @property (nonatomic, weak) id<MGCMonthPlannerViewDelegate> delegate;
 
 /*!
-	@abstract	Scrollable range of months. Default is nil, for 'infinite' scrolling.
-	@discussion The range start date is set to the first day of the month, range end to the first day of the month followind end.
-	@discussion If the currently visible month is outside the new range, the view scrolls to the range starting date.
+ @abstract    Scrollable range of months. Default is nil, for 'infinite' scrolling.
+ @discussion The range start date is set to the first day of the month, range end to the first day of the month followind end.
+ @discussion If the currently visible month is outside the new range, the view scrolls to the range starting date.
  */
 @property (nonatomic, copy) MGCDateRange *dateRange;
 
 
 /*!
-	@group Creating event views
+ @group Creating event views
  */
 
 /*!
-	@abstract	Registers a class for use in creating new event views for the month planner view.
-	@param		viewClass	The class of the view that you want to use.
-	@param		identifier	The reuse identifier to associate with the specified class.
-                            This parameter must not be nil and must not be an empty string.
-	@discussion	Prior to calling the dequeueReusableCellWithIdentifier:forEventAtIndex:date: method, you must use this method to tell the month planner how to create a new event view.
+ @abstract    Registers a class for use in creating new event views for the month planner view.
+ @param        viewClass    The class of the view that you want to use.
+ @param        identifier    The reuse identifier to associate with the specified class.
+ This parameter must not be nil and must not be an empty string.
+ @discussion    Prior to calling the dequeueReusableCellWithIdentifier:forEventAtIndex:date: method, you must use this method to tell the month planner how to create a new event view.
  */
 - (void)registerClass:(Class)viewClass forEventCellReuseIdentifier:(NSString*)reuseIdentifier;
 
 /*!
-	@abstract	Returns a reusable event view object located by its identifier.
-	@param		identifier	A string identifying the view object to be reused. This parameter must not be nil.
-	@param		index		The index of the event.
-	@param		date		The date of the event.
-	@return		A valid MGCEventView object.
-	@discussion	Call this method from your data source object when asked to provide a new event view for the month planner. This method dequeues an existing view if one is available or creates a new one based on the class you previously registered.
-	@warning	You must register a class using the registerClass:forEventCellReuseIdentifier: method before calling this method.
+ @abstract    Returns a reusable event view object located by its identifier.
+ @param        identifier    A string identifying the view object to be reused. This parameter must not be nil.
+ @param        index        The index of the event.
+ @param        date        The date of the event.
+ @return        A valid MGCEventView object.
+ @discussion    Call this method from your data source object when asked to provide a new event view for the month planner. This method dequeues an existing view if one is available or creates a new one based on the class you previously registered.
+ @warning    You must register a class using the registerClass:forEventCellReuseIdentifier: method before calling this method.
  */
 - (MGCEventView*)dequeueReusableCellWithIdentifier:(NSString*)reuseIdentifier forEventAtIndex:(NSUInteger)index date:(NSDate*)date;
 
 
 
 /*!
-	@group Scrolling and navigation
+ @group Scrolling and navigation
  */
 
 /*!
-	@abstract	The paging style for the view.
-	@discussion If set MGCMonthPlannerPagingModeNone, paging is disabled.
-                If set to MGCMonthPlannerPagingModeHeaderBottom, scrolling stops below the header.
-                If set to MGCMonthPlannerPagingModeHeaderTop, scrolling stops above the header.
+ @abstract    The paging style for the view.
+ @discussion If set MGCMonthPlannerPagingModeNone, paging is disabled.
+ If set to MGCMonthPlannerPagingModeHeaderBottom, scrolling stops below the header.
+ If set to MGCMonthPlannerPagingModeHeaderTop, scrolling stops above the header.
  */
 @property (nonatomic) MGCMonthPlannerPagingMode pagingMode;
 
@@ -286,133 +286,133 @@ typedef NS_ENUM(NSUInteger, MGCMonthPlannerScrollAlignment) {
 - (void)scrollToDate:(NSDate*)date animated:(BOOL)animated;
 
 /*!
-	@abstract	Scrolls the view to make a given date visible.
-	@param		date		The date to scroll into view.
-	@param		alignment   If set to MGCMonthPlannerScrollAlignmentWeekRow, the top of the view is aligned with the week row for given date.
-                            If set to MGCMonthPlannerScrollAlignmentHeaderBottom, it is aligned with the first row of the month.
-                            If set to MGCMonthPlannerScrollAlignmentHeaderTop, it is aligned with the top of the month header.
-	@param		animated	Specify YES to animate the scrolling behavior or NO to adjust the visible content immediately.
-	@warning	If `date` param is not in the scrollable range of dates, an exception is thrown.
+ @abstract    Scrolls the view to make a given date visible.
+ @param        date        The date to scroll into view.
+ @param        alignment   If set to MGCMonthPlannerScrollAlignmentWeekRow, the top of the view is aligned with the week row for given date.
+ If set to MGCMonthPlannerScrollAlignmentHeaderBottom, it is aligned with the first row of the month.
+ If set to MGCMonthPlannerScrollAlignmentHeaderTop, it is aligned with the top of the month header.
+ @param        animated    Specify YES to animate the scrolling behavior or NO to adjust the visible content immediately.
+ @warning    If `date` param is not in the scrollable range of dates, an exception is thrown.
  */
 - (void)scrollToDate:(NSDate*)date alignment:(MGCMonthPlannerScrollAlignment)alignment animated:(BOOL)animated;
 
 
 
 /*!
-	@group Locating days and events
+ @group Locating days and events
  */
 
 
 /*!
-	@abstract	Returns the date range of all visible days.
-	@discussion Returns nil if no days are shown.
+ @abstract    Returns the date range of all visible days.
+ @discussion Returns nil if no days are shown.
  */
 @property (nonatomic, readonly) MGCDateRange *visibleDays;
 
 /*!
-	@abstract	Returns an array of all visible event views currently displayed by the month planner.
-	@return		An array of MGCEventView objects. If no event view is visible, this method returns an empty array.
+ @abstract    Returns an array of all visible event views currently displayed by the month planner.
+ @return        An array of MGCEventView objects. If no event view is visible, this method returns an empty array.
  */
 - (NSArray*)visibleEventCells;
 
 
 /*!
-	@abstract	Returns the visible event view with specified index and date.
-	@param		index		The index of the event.
-	@param		date		The date of the event.
-	@return		The event view or nil if the event view is not visible, or parameters are out of range.
+ @abstract    Returns the visible event view with specified index and date.
+ @param        index        The index of the event.
+ @param        date        The date of the event.
+ @return        The event view or nil if the event view is not visible, or parameters are out of range.
  */
 - (MGCEventView*)cellForEventAtIndex:(NSUInteger)index date:(NSDate*)date;
 
 /*!
-	@abstract	Returns the event view at the specified point in the month planner view.
-	@param		point		A point in the month planner view’s coordinate system.
-	@param		date		If not nil, it will contain on return the date of the event located at point.
-    @param		index		If not nil, it will contain on return the index of the event located at point.
-	@return		The event view at the specified point, or nil if no event was found at the specified point.
+ @abstract    Returns the event view at the specified point in the month planner view.
+ @param        point        A point in the month planner view’s coordinate system.
+ @param        date        If not nil, it will contain on return the date of the event located at point.
+ @param        index        If not nil, it will contain on return the index of the event located at point.
+ @return        The event view at the specified point, or nil if no event was found at the specified point.
  */
 - (MGCEventView*)eventCellAtPoint:(CGPoint)pt date:(NSDate**)date index:(NSUInteger*)index;
 
 /*!
-	@abstract	Returns the date at the specified point in the month planner view.
-	@param		point		A point in the month planner view’s coordinate system.
-	@return		The date at the specified point, or nil if the date can't be determined.
-*/
+ @abstract    Returns the date at the specified point in the month planner view.
+ @param        point        A point in the month planner view’s coordinate system.
+ @return        The date at the specified point, or nil if the date can't be determined.
+ */
 - (NSDate*)dayAtPoint:(CGPoint)pt;
 
 
 /*!
-	@group Reloading events
+ @group Reloading events
  */
 
 /*!
-	@abstract	Reloads all events in the month planner view.
-	@discussion The view discards any currently displayed visible event views and redisplays them.
+ @abstract    Reloads all events in the month planner view.
+ @discussion The view discards any currently displayed visible event views and redisplays them.
  */
 - (void)reloadEvents;
 
 /*!
-	@abstract	Reloads all events for given date.
-	@param		date		The date for which to reload events.
-	@discussion The view discards any currently displayed visible event views at date and redisplays them.
+ @abstract    Reloads all events for given date.
+ @param        date        The date for which to reload events.
+ @discussion The view discards any currently displayed visible event views at date and redisplays them.
  */
 - (void)reloadEventsAtDate:(NSDate*)date;
 
 
 /*!
-	@abstract	Reloads all events in given date range.
-	@param		range
-	@discussion The view discards any currently displayed visible event views in the range and redisplays them.
+ @abstract    Reloads all events in given date range.
+ @param        range
+ @discussion The view discards any currently displayed visible event views in the range and redisplays them.
  */
 - (void)reloadEventsInRange:(MGCDateRange*)range;
 
 
 /*!
-	@group Managing the selection
+ @group Managing the selection
  */
 
 /*!
-	@abstract	Determines whether users can select events in the month planner view.
-	@discussion The default value is YES.
-                For more control over the selection of items, you can provide a delegate object and implement the
-                monthPlannerView:shouldSelectEventAtIndex:date: methods of the MGCMonthPlannerViewDelegate protocol.
+ @abstract    Determines whether users can select events in the month planner view.
+ @discussion The default value is YES.
+ For more control over the selection of items, you can provide a delegate object and implement the
+ monthPlannerView:shouldSelectEventAtIndex:date: methods of the MGCMonthPlannerViewDelegate protocol.
  */
 @property (nonatomic) BOOL allowsSelection;
 
 /*!
-	@abstract	Returns the date of the selected event, or nil if no event is selected.
+ @abstract    Returns the date of the selected event, or nil if no event is selected.
  */
 @property (nonatomic, readonly) NSDate *selectedEventDate;
 
 /*!
-	@abstract	Returns the index of the selected event at the date given by selectedEventDate.
+ @abstract    Returns the index of the selected event at the date given by selectedEventDate.
  */
 @property (nonatomic, readonly) NSUInteger selectedEventIndex;
 
 /*!
-	@abstract	Returns the event view for the current selection, or nil if no event is selected.
+ @abstract    Returns the event view for the current selection, or nil if no event is selected.
  */
 @property (nonatomic, readonly) MGCEventView *selectedEventView;
 
 /*!
-	@abstract	Selects the visible event view at specified index and date.
-	@param		index		The index of the event.
-	@param		date		The date of the event.
-	@discussion If the allowsSelection property is NO, calling this method has no effect.
-                If there is an existing selection, calling this method replaces the previous selection.
-	@discussion	This method does not cause any selection-related delegate methods to be called.
+ @abstract    Selects the visible event view at specified index and date.
+ @param        index        The index of the event.
+ @param        date        The date of the event.
+ @discussion If the allowsSelection property is NO, calling this method has no effect.
+ If there is an existing selection, calling this method replaces the previous selection.
+ @discussion    This method does not cause any selection-related delegate methods to be called.
  */
 - (void)selectEventCellAtIndex:(NSUInteger)index date:(NSDate*)date;
 
 /*!
-	@abstract	Cancels current selection.
-	@discussion If the allowsSelection property is NO, calling this method has no effect.
-	@discussion	This method does not cause any selection-related delegate methods to be called.
+ @abstract    Cancels current selection.
+ @discussion If the allowsSelection property is NO, calling this method has no effect.
+ @discussion    This method does not cause any selection-related delegate methods to be called.
  */
 - (void)deselectEvent;
 
 /*!
-	@abstract	Call this method to hide the interactive cell, after an existing event or a new one has been dragged around.
+ @abstract    Call this method to hide the interactive cell, after an existing event or a new one has been dragged around.
  */
 - (void)endInteraction;
 
@@ -432,33 +432,33 @@ typedef NS_ENUM(NSUInteger, MGCMonthPlannerScrollAlignment) {
 @required
 
 /*!
-	@abstract	Asks the data source for the number of events at specified date. (required)
+ @abstract    Asks the data source for the number of events at specified date. (required)
  */
 - (NSInteger)monthPlannerView:(MGCMonthPlannerView*)view numberOfEventsAtDate:(NSDate*)date;
 
 /*!
-	@abstract	Asks the data source for the date range of the specified event in the month planner view. (required)
+ @abstract    Asks the data source for the date range of the specified event in the month planner view. (required)
  */
 - (MGCDateRange*)monthPlannerView:(MGCMonthPlannerView*)view dateRangeForEventAtIndex:(NSUInteger)index date:(NSDate*)date;
 
 /*!
-	@abstract	Asks the data source for the view that corresponds to the specified event in the month planner view. (required)
+ @abstract    Asks the data source for the view that corresponds to the specified event in the month planner view. (required)
  */
 - (MGCEventView*)monthPlannerView:(MGCMonthPlannerView*)view cellForEventAtIndex:(NSUInteger)index date:(NSDate*)date;
 
 @optional
 
 /*!
-	@abstract	Asks the data source for the view to be displayed when a new event is about to be created.
-	@discussion	If this method is not implemented by the data source, a standard event view will be used.
+ @abstract    Asks the data source for the view to be displayed when a new event is about to be created.
+ @discussion    If this method is not implemented by the data source, a standard event view will be used.
  
  */
 - (MGCEventView*)monthPlannerView:(MGCMonthPlannerView *)view cellForNewEventAtDate:(NSDate*)date;
 
 /*!
-	@abstract	Asks the data source if the specified event can be moved around. If the method returns YES, the
-                event view can be dragged and dropped to a different date.
-	@discussion	This method is not called if month planner view's canMoveEvents property is set to NO.
+ @abstract    Asks the data source if the specified event can be moved around. If the method returns YES, the
+ event view can be dragged and dropped to a different date.
+ @discussion    This method is not called if month planner view's canMoveEvents property is set to NO.
  
  */
 - (BOOL)monthPlannerView:(MGCMonthPlannerView*)view canMoveCellForEventAtIndex:(NSUInteger)index date:(NSDate*)date;
@@ -475,30 +475,30 @@ typedef NS_ENUM(NSUInteger, MGCMonthPlannerScrollAlignment) {
 @optional
 
 /*!
-	@abstract   Asks the delegate for the attributed string of the day header for given date.
-    @param		view		The month planner view requesting the information.
-	@param		date		The date for the header.
-	@return     The attributed string to draw.
+ @abstract   Asks the delegate for the attributed string of the day header for given date.
+ @param        view        The month planner view requesting the information.
+ @param        date        The date for the header.
+ @return     The attributed string to draw.
  */
 - (NSAttributedString*)monthPlannerView:(MGCMonthPlannerView*)view attributedStringForDayHeaderAtDate:(NSDate*)date;
 
 /*!
-	@abstract	Tells the delegate that the month planner view was scrolled.
+ @abstract    Tells the delegate that the month planner view was scrolled.
  */
 - (void)monthPlannerViewDidScroll:(MGCMonthPlannerView*)view;
 
 
 /*!
-	@abstract	Tells the delegate that a day cell was selected.
-	@param		view		The month planner view object notifying about the selection change.
-	@param		date		The date for the corresponding cell.
+ @abstract    Tells the delegate that a day cell was selected.
+ @param        view        The month planner view object notifying about the selection change.
+ @param        date        The date for the corresponding cell.
  */
 - (void)monthPlannerView:(MGCMonthPlannerView*)view didSelectDayCellAtDate:(NSDate*)date;
 
 /*!
-	@abstract	Tells the delegate that a day cell was selected.
-	@param		view		The month planner view object notifying about the selection change.
-	@param		date		The date for the corresponding cell.
+ @abstract    Tells the delegate that a day cell was selected.
+ @param        view        The month planner view object notifying about the selection change.
+ @param        date        The date for the corresponding cell.
  */
 - (void)monthPlannerView:(MGCMonthPlannerView*)view didShowCell:(MGCEventView*)cell forNewEventAtDate:(NSDate*)date;
 
@@ -508,51 +508,52 @@ typedef NS_ENUM(NSUInteger, MGCMonthPlannerScrollAlignment) {
 - (void)monthPlannerView:(MGCMonthPlannerView*)view didMoveEventAtIndex:(NSUInteger)index date:(NSDate*)dateOld toDate:(NSDate*)dayNew;
 
 /*!
-	@group Managing the selection of events
+ @group Managing the selection of events
  */
 
 /*!
-	@abstract	Asks the delegate if the specified event should be selected.
-	@param		view		The month planner view object making the request.
-	@param		index		The index of the event.
-	@param		date		The day of the event.
-	@return		YES if the event should be selected or NO if it should not.
-	@discussion	The month planner view calls this method when the user tries to select an event. 
-                It does not call this method when you programmatically set the selection.
-	@discussion	If you do not implement this method, the default return value is YES.
+ @abstract    Asks the delegate if the specified event should be selected.
+ @param        view        The month planner view object making the request.
+ @param        index        The index of the event.
+ @param        date        The day of the event.
+ @return        YES if the event should be selected or NO if it should not.
+ @discussion    The month planner view calls this method when the user tries to select an event.
+ It does not call this method when you programmatically set the selection.
+ @discussion    If you do not implement this method, the default return value is YES.
  */
 - (BOOL)monthPlannerView:(MGCMonthPlannerView*)view shouldSelectEventAtIndex:(NSUInteger)index date:(NSDate*)date;
 
 /*!
-	@abstract	Tells the delegate that the specified event was selected.
-	@param		view		The month planner view object notifying about the selection change.
-	@param		index		The index of the event.
-	@param		date		The day of the event.
-	@return		YES if the event should be selected or NO if it should not.
-	@discussion	The month planner view calls this method when the user successfully selects an event. 
-                It does not call this method when you programmatically set the selection.
+ @abstract    Tells the delegate that the specified event was selected.
+ @param        view        The month planner view object notifying about the selection change.
+ @param        index        The index of the event.
+ @param        date        The day of the event.
+ @return        YES if the event should be selected or NO if it should not.
+ @discussion    The month planner view calls this method when the user successfully selects an event.
+ It does not call this method when you programmatically set the selection.
  */
 - (void)monthPlannerView:(MGCMonthPlannerView*)view didSelectEventAtIndex:(NSUInteger)index date:(NSDate*)date;
 
 /*!
-	@abstract	Asks the delegate if the specified event should be deselected.
-	@param		view		The month planner view object notifying about the selection change.
-	@param		index		The index of the event.
-	@param		date		The day of the event.
-	@return		YES if the event should be selected or NO if it should not.
-	@discussion	The month planner view calls this method when the user tries to deselect an already selected event.
-                It does not call this method when you programmatically set the selection.
+ @abstract    Asks the delegate if the specified event should be deselected.
+ @param        view        The month planner view object notifying about the selection change.
+ @param        index        The index of the event.
+ @param        date        The day of the event.
+ @return        YES if the event should be selected or NO if it should not.
+ @discussion    The month planner view calls this method when the user tries to deselect an already selected event.
+ It does not call this method when you programmatically set the selection.
  */
 - (BOOL)monthPlannerView:(MGCMonthPlannerView*)view shouldDeselectEventAtIndex:(NSUInteger)index date:(NSDate*)date;
 
 /*!
-	@abstract	Tells the delegate that the specified event was deselected.
-	@param		view		The month planner view object notifying about the selection change.
-	@param		index		The index of the event.
-	@param		date		The day of the event.
-	@return		YES if the event should be selected or NO if it should not.
-	@discussion This does not get called when you programmatically deselect an event with the deselectEvent method
+ @abstract    Tells the delegate that the specified event was deselected.
+ @param        view        The month planner view object notifying about the selection change.
+ @param        index        The index of the event.
+ @param        date        The day of the event.
+ @return        YES if the event should be selected or NO if it should not.
+ @discussion This does not get called when you programmatically deselect an event with the deselectEvent method
  */
 - (void)monthPlannerView:(MGCMonthPlannerView*)view didDeselectEventAtIndex:(NSUInteger)index date:(NSDate*)date;
 
 @end
+

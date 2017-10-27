@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -32,6 +32,11 @@
 #import <EventKitUI/EventKitUI.h>
 #import "MGCDayPlannerViewController.h"
 
+typedef enum {
+    TimedEventType = 1,
+    AllDayEventType = 2,
+    AnyEventType = TimedEventType|AllDayEventType
+} EventType;
 
 @protocol MGCDayPlannerEKViewControllerDelegate;
 
@@ -47,6 +52,11 @@
 - (instancetype)initWithEventStore:(EKEventStore*)eventStore;
 - (void)reloadEvents;
 
+- (NSArray*)eventsOfType:(EventType)type forDay:(NSDate*)date;
+- (EKEvent*)eventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
+- (void)dayPlannerView:(MGCDayPlannerView*)view didSelectEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
+- (void)showEditControllerForEvent:(EKEvent*)ev;
+
 @end
 
 
@@ -55,7 +65,8 @@
 
 @optional
 
-- (void)dayPlannerEKEViewController:(MGCDayPlannerEKViewController*)vc willPresentEventViewController:(EKEventViewController*)eventViewController;                                     
+- (void)dayPlannerEKEViewController:(MGCDayPlannerEKViewController*)vc willPresentEventViewController:(EKEventViewController*)eventViewController;
 - (UINavigationController*)dayPlannerEKViewController:(MGCDayPlannerEKViewController*)vc navigationControllerForPresentingEventViewController:(EKEventViewController*)eventViewController;
 
 @end
+

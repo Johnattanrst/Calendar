@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -37,15 +37,16 @@
 {
     self = [super initWithFrame:frame];
     if (self)
-	{
-		self.autoresizesSubviews = YES;
-		self.backgroundColor = [UIColor clearColor];
-
-		_calendarView = [[MGCMonthMiniCalendarView alloc]initWithFrame:self.bounds];
-		_calendarView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-		[self.contentView addSubview:_calendarView];
-	}
+    {
+        self.autoresizesSubviews = YES;
+        self.backgroundColor = [UIColor clearColor];
+        
+        _calendarView = [[MGCMonthMiniCalendarView alloc]initWithFrame:self.bounds];
+        _calendarView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+        [self.contentView addSubview:_calendarView];
+    }
     return self;
 }
 
 @end
+

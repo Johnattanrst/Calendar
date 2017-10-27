@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -37,14 +37,15 @@
 {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
-		self.autoresizesSubviews = YES;
-		
-		_label = [[UILabel alloc]initWithFrame:self.bounds];
-		_label.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-		_label.numberOfLines = 0;
-		[self addSubview:_label];
+        self.autoresizesSubviews = YES;
+        
+        _label = [[UILabel alloc]initWithFrame:self.bounds];
+        _label.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+        _label.numberOfLines = 0;
+        [self addSubview:_label];
     }
     return self;
 }
 
 @end
+

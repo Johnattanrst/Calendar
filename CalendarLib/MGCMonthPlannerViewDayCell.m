@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -29,6 +29,7 @@
 //
 
 #import "MGCMonthPlannerViewDayCell.h"
+#import "Constant.h"
 
 static const CGFloat kHeaderMargin = 1;
 static const CGFloat kDotSize = 8;
@@ -50,7 +51,7 @@ static const CGFloat kDotSize = 8;
         self.backgroundColor = [UIColor whiteColor];
         
         self.dayLabel = [[UILabel alloc]initWithFrame:CGRectZero];
-        self.dayLabel.font = [UIFont systemFontOfSize:[UIFont smallSystemFontSize]];
+        self.dayLabel.font = font12//[UIFont systemFontOfSize:[UIFont smallSystemFontSize]];
         self.dayLabel.numberOfLines = 1;
         self.dayLabel.adjustsFontSizeToFitWidth = YES;
         
@@ -61,7 +62,7 @@ static const CGFloat kDotSize = 8;
         self.dotLayer.fillColor = [UIColor redColor].CGColor;
         self.dotLayer.hidden = YES;
         [self.contentView.layer addSublayer:self.dotLayer];
-      
+        
         UIView *view = [UIView new];
         view.backgroundColor = [UIColor colorWithWhite:.7 alpha:.2];
         self.selectedBackgroundView = view;
@@ -118,3 +119,4 @@ static const CGFloat kDotSize = 8;
 }
 
 @end
+

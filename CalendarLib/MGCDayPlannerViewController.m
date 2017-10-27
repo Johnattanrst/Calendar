@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -43,27 +43,27 @@
 
 - (MGCDayPlannerView*)dayPlannerView
 {
-	return (MGCDayPlannerView*)self.view;
+    return (MGCDayPlannerView*)self.view;
 }
 
 - (void)setDayPlannerView:(MGCDayPlannerView*)dayPlannerView
 {
-	[super setView:dayPlannerView];
-	
-	if (!dayPlannerView.dataSource)
-		dayPlannerView.dataSource = self;
-	
-	if (!dayPlannerView.delegate)
-		dayPlannerView.delegate = self;
+    [super setView:dayPlannerView];
+    
+    if (!dayPlannerView.dataSource)
+    dayPlannerView.dataSource = self;
+    
+    if (!dayPlannerView.delegate)
+    dayPlannerView.delegate = self;
 }
 
 #pragma mark - UIViewController
 
 - (void)loadView
 {
-	MGCDayPlannerView *dayPlannerView = [[MGCDayPlannerView alloc]initWithFrame:CGRectZero];
-	dayPlannerView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-	self.dayPlannerView = dayPlannerView;
+    MGCDayPlannerView *dayPlannerView = [[MGCDayPlannerView alloc]initWithFrame:CGRectZero];
+    dayPlannerView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    self.dayPlannerView = dayPlannerView;
     self.dayPlannerView.autoresizesSubviews = YES;
 }
 
@@ -82,7 +82,7 @@
     self.headerView = [[MGCCalendarHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.dayPlannerView.frame.size.width, self.dayPlannerView.dayHeaderHeight) collectionViewLayout:[[UICollectionViewFlowLayout alloc] init] andDayPlannerView:self.dayPlannerView];
     
     self.headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
+    
     [self.view addSubview:self.headerView];
 }
 
@@ -107,32 +107,32 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 #pragma mark - MGCDayPlannerViewDataSource
 
 - (NSInteger)dayPlannerView:(MGCDayPlannerView *)view numberOfEventsOfType:(MGCEventType)type atDate:(NSDate *)date
 {
-	return 0;
+    return 0;
 }
 
 - (MGCEventView*)dayPlannerView:(MGCDayPlannerView*)view viewForEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date
 {
-	NSLog(@"dayPlannerView:viewForEventOfType:atIndex:date: has to implemented in MGCDayPlannerViewController subclasses.");
-	return nil;
+    NSLog(@"dayPlannerView:viewForEventOfType:atIndex:date: has to implemented in MGCDayPlannerViewController subclasses.");
+    return nil;
 }
 
 - (MGCDateRange*)dayPlannerView:(MGCDayPlannerView*)view dateRangeForEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date
 {
-	NSLog(@"dayPlannerView:dateRangeForEventOfType:atIndex:date: has to implemented in MGCDayPlannerViewController subclasses.");
-	return nil;
+    NSLog(@"dayPlannerView:dateRangeForEventOfType:atIndex:date: has to implemented in MGCDayPlannerViewController subclasses.");
+    return nil;
 }
 
 #pragma mark - MGCDayPlannerViewDelegate
@@ -152,3 +152,4 @@
 }
 
 @end
+

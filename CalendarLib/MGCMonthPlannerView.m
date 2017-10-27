@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -49,7 +49,7 @@ static NSString* const MonthHeaderViewIdentifier = @"MonthHeaderViewIdentifier";
 static NSString* const MonthBackgroundViewIdentifier = @"MonthBackgroundViewIdentifier";
 static NSString* const EventsRowViewIdentifier = @"EventsRowViewIdentifier";
 
-static const NSUInteger kRowCacheSize = 40;			// number of rows to cache (cells / layout)
+static const NSUInteger kRowCacheSize = 40;            // number of rows to cache (cells / layout)
 static const CGFloat kDragScrollOffset = 20.;
 static const CGFloat kDragScrollZoneSize = 20.;
 static NSString* const kDefaultDateFormat = @"dMMYY";
@@ -66,26 +66,26 @@ typedef enum
 
 @interface MGCMonthPlannerView () <UICollectionViewDataSource, MGCMonthPlannerViewLayoutDelegate, MGCEventsRowViewDelegate>
 
-@property (nonatomic, readonly) UICollectionView *eventsView;		// main view
-@property (nonatomic) CALayer *headerBorderLayer;					// header bottom border
-@property (nonatomic, readonly) MGCMonthPlannerViewLayout *layout;	// collection view layout
-@property (nonatomic, copy) NSDate *startDate;						// always the first day of a month
-@property (nonatomic, readonly) NSDate *maxStartDate;				// maximum date for the start of a loaded page of the collection view - set with dateRange, nil for infinite scrolling
-@property (nonatomic, readonly) NSUInteger numberOfLoadedMonths;	// number of months loaded at once in the collection views
-@property (nonatomic, readonly) MGCDateRange* loadedDateRange;		// date range of all months currently loaded in the collection views
-@property (nonatomic) NSDateFormatter *dateFormatter;				// date formatter for day cells
+@property (nonatomic, readonly) UICollectionView *eventsView;        // main view
+@property (nonatomic) CALayer *headerBorderLayer;                    // header bottom border
+@property (nonatomic, readonly) MGCMonthPlannerViewLayout *layout;    // collection view layout
+@property (nonatomic, copy) NSDate *startDate;                        // always the first day of a month
+@property (nonatomic, readonly) NSDate *maxStartDate;                // maximum date for the start of a loaded page of the collection view - set with dateRange, nil for infinite scrolling
+@property (nonatomic, readonly) NSUInteger numberOfLoadedMonths;    // number of months loaded at once in the collection views
+@property (nonatomic, readonly) MGCDateRange* loadedDateRange;        // date range of all months currently loaded in the collection views
+@property (nonatomic) NSDateFormatter *dateFormatter;                // date formatter for day cells
 @property (nonatomic) NSMutableArray *dayLabels;                    // week day labels (UILabel) for header view
-@property (nonatomic) MGCReusableObjectQueue *reuseQueue;			// reuse queue for MGCEventsRowView and MGCEventView objects
-@property (nonatomic) MutableOrderedDictionary *eventRows;			// cache of MRU MGCEventsRowView objects indexed by start date
+@property (nonatomic) MGCReusableObjectQueue *reuseQueue;            // reuse queue for MGCEventsRowView and MGCEventView objects
+@property (nonatomic) MutableOrderedDictionary *eventRows;            // cache of MRU MGCEventsRowView objects indexed by start date
 @property (nonatomic, readwrite) NSDate *selectedEventDate;         // date of the selected event, or nil if no event is selected
 @property (nonatomic, readwrite) NSUInteger selectedEventIndex;     // index of the selected event at the date returned by selectedEventDate
-@property (nonatomic) MGCEventView *interactiveCell;				// cell moved around during drag and drop
-@property (nonatomic) BOOL isInteractiveCellForNewEvent;			// YES if the interactive cell is for a new event
-@property (nonatomic) CGPoint interactiveCelltouchPoint;			// touch point in cell coordinates
-@property (nonatomic) NSInteger dragEventIndex;						// event index for the cell being dragged
-@property (nonatomic) NSDate *dragEventDate;						// starting date for the cell being dragged
-@property (nonatomic) MGCDateRange *dragEventDateRange;				// date range (day+time) of the event being moved
-@property (nonatomic) NSUInteger dragEventTouchDayOffset;			// touch offset from start of event
+@property (nonatomic) MGCEventView *interactiveCell;                // cell moved around during drag and drop
+@property (nonatomic) BOOL isInteractiveCellForNewEvent;            // YES if the interactive cell is for a new event
+@property (nonatomic) CGPoint interactiveCelltouchPoint;            // touch point in cell coordinates
+@property (nonatomic) NSInteger dragEventIndex;                        // event index for the cell being dragged
+@property (nonatomic) NSDate *dragEventDate;                        // starting date for the cell being dragged
+@property (nonatomic) MGCDateRange *dragEventDateRange;                // date range (day+time) of the event being moved
+@property (nonatomic) NSUInteger dragEventTouchDayOffset;            // touch offset from start of event
 @property (nonatomic, weak) NSTimer *dragTimer;
 
 @end
@@ -167,7 +167,7 @@ typedef enum
 {
     // remove all cached events rows not currently displayed
     NSMutableArray *delete = [NSMutableArray array];
-
+    
     MGCDateRange *visibleDays = self.visibleDays;
     
     for (NSDate *date in self.eventRows.allKeys) {
@@ -394,11 +394,11 @@ typedef enum
     numMonths = MAX(numMonths, minLoadedMonths);
     
     if (self.dateRange) {
-		NSInteger diff = [self.dateRange components:NSCalendarUnitMonth forCalendar:self.calendar].month;
-		numMonths = MIN(numMonths, diff);  // cannot load more than the total number of scrollable months
-	}
+        NSInteger diff = [self.dateRange components:NSCalendarUnitMonth forCalendar:self.calendar].month;
+        numMonths = MIN(numMonths, diff);  // cannot load more than the total number of scrollable months
+    }
     
-	return numMonths;
+    return numMonths;
 }
 
 // range of loaded months
@@ -465,19 +465,19 @@ typedef enum
 
 - (NSUInteger)numberOfDaysForMonthAtIndex:(NSUInteger)month
 {
-	NSDate *date = [self dateStartingMonthAtIndex:month];
-	NSRange range = [self.calendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:date];
-	return range.length;
+    NSDate *date = [self dateStartingMonthAtIndex:month];
+    NSRange range = [self.calendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:date];
+    return range.length;
 }
 
 - (NSUInteger)columnForDayAtIndexPath:(NSIndexPath*)indexPath
 {
-	NSDate *date = [self dateForDayAtIndexPath:indexPath];
-	
-	NSUInteger weekday = [self.calendar components:NSCalendarUnitWeekday fromDate:date].weekday;
-	// zero-based, 0 is the first day of week of current calendar
-	weekday = (weekday + 7 - self.calendar.firstWeekday) % 7;
-	return weekday;
+    NSDate *date = [self dateForDayAtIndexPath:indexPath];
+    
+    NSUInteger weekday = [self.calendar components:NSCalendarUnitWeekday fromDate:date].weekday;
+    // zero-based, 0 is the first day of week of current calendar
+    weekday = (weekday + 7 - self.calendar.firstWeekday) % 7;
+    return weekday;
 }
 
 - (MGCDateRange*)dateRangeForEventsRowView:(MGCEventsRowView*)rowView
@@ -559,7 +559,7 @@ typedef enum
     MGCEventView* cell = (MGCEventView*)[self.reuseQueue dequeueReusableObjectWithReuseIdentifier:reuseIdentifier];
     
     if ([self.selectedEventDate isEqualToDate:date] && index == self.selectedEventIndex)
-        cell.selected = YES;
+    cell.selected = YES;
     
     return cell;
 }
@@ -623,11 +623,11 @@ typedef enum
 
 - (void)reloadEventsInRange:(MGCDateRange*)range
 {
-   if (self.style == MGCMonthPlannerStyleDots) {
-       
-       [range enumerateDaysWithCalendar:self.calendar usingBlock:^(NSDate *day, BOOL *stop) {
-           [self reloadEventsAtDate:day];
-       }];
+    if (self.style == MGCMonthPlannerStyleDots) {
+        
+        [range enumerateDaysWithCalendar:self.calendar usingBlock:^(NSDate *day, BOOL *stop) {
+            [self reloadEventsAtDate:day];
+        }];
     }
     else if (self.style == MGCMonthPlannerStyleEvents) {
         
@@ -666,16 +666,16 @@ typedef enum
 
 - (MGCEventView*)cellForEventAtIndex:(NSUInteger)index date:(NSDate*)date
 {
-	for (MGCEventsRowView *rowView in [self visibleEventRows])
-	{
-		NSUInteger day = [self.calendar components:NSCalendarUnitDay fromDate:rowView.referenceDate toDate:date options:0].day;
-		if (NSLocationInRange(day, rowView.daysRange))
-		{
-			return [rowView cellAtIndexPath:[NSIndexPath indexPathForItem:index inSection:day]];
-		}
-		
-	}
-	return nil;
+    for (MGCEventsRowView *rowView in [self visibleEventRows])
+    {
+        NSUInteger day = [self.calendar components:NSCalendarUnitDay fromDate:rowView.referenceDate toDate:date options:0].day;
+        if (NSLocationInRange(day, rowView.daysRange))
+        {
+            return [rowView cellAtIndexPath:[NSIndexPath indexPathForItem:index inSection:day]];
+        }
+        
+    }
+    return nil;
 }
 
 - (MGCEventView*)eventCellAtPoint:(CGPoint)pt date:(NSDate**)date index:(NSUInteger*)index
@@ -788,8 +788,8 @@ typedef enum
     
     // check if date in range
     if (self.dateRange && ![self.dateRange containsDate:date])
-        [NSException raise:@"Invalid parameter" format:@"date %@ is not in range %@ for this month planner view", date, self.dateRange];
-
+    [NSException raise:@"Invalid parameter" format:@"date %@ is not in range %@ for this month planner view", date, self.dateRange];
+    
     CGFloat yOffset = [self yOffsetForMonth:date];
     
     if (position == MGCMonthPlannerScrollAlignmentHeaderBottom) {
@@ -801,7 +801,7 @@ typedef enum
     }
     
     [self.eventsView setContentOffset:CGPointMake(0, yOffset) animated:animated];
-
+    
     if ([self.delegate respondsToSelector:@selector(monthPlannerViewDidScroll:)]) {
         [self.delegate monthPlannerViewDidScroll:self];
     }
@@ -835,18 +835,18 @@ typedef enum
 {
     CGFloat yOffset = self.eventsView.contentOffset.y;
     CGFloat contentHeight = self.eventsView.contentSize.height;
-
+    
     if (yOffset < self.monthMaximumHeight || CGRectGetMaxY(self.eventsView.bounds) + self.monthMaximumHeight > contentHeight) {
         
         NSDate *oldStart = [self.startDate copy];
         
         NSDate *centerMonth = [self monthFromOffset:yOffset];
         NSInteger monthOffset = [self adjustStartDateForCenteredMonth:centerMonth];
-    
+        
         if (monthOffset != 0) {
             CGFloat y = [self yOffsetForMonth:oldStart];
             [self.eventsView reloadData];
-        
+            
             CGPoint offset = self.eventsView.contentOffset;
             offset.y = y + yOffset;
             self.eventsView.contentOffset = offset;
@@ -905,7 +905,7 @@ typedef enum
     CGFloat width = fmaxf([self.layout columnWidth:0] - 2*kHeaderHMargin, 0);
     CGFloat height = fmaxf(self.headerHeight - 2*kHeaderVMargin, 0);
     CGSize labelSize = CGSizeMake(width, height);
-        
+    
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.calendar = self.calendar;
     
@@ -916,7 +916,7 @@ typedef enum
     
     UIFont *font = [UIFont systemFontOfSize:[UIFont labelFontSize]];
     CGFloat maxFontSize = [self maxSizeForFont:font toFitStrings:days inSize:labelSize];
-        
+    
     if (maxFontSize / font.pointSize < .8) {
         days = formatter.veryShortStandaloneWeekdaySymbols;
         maxFontSize = [self maxSizeForFont:font toFitStrings:days inSize:labelSize];
@@ -971,7 +971,7 @@ typedef enum
         
         xPos += colWidth;
     }
- 
+    
     self.eventsView.frame = CGRectMake(0, self.headerHeight, self.bounds.size.width, self.bounds.size.height - self.headerHeight);
     if (!self.eventsView.superview) {
         [self addSubview:self.eventsView];
@@ -981,7 +981,7 @@ typedef enum
     if (!self.headerBorderLayer.superlayer) {
         [self.layer addSublayer:_headerBorderLayer];
     }
-
+    
     // we have to reload everything at this point - layout invalidation is not enough -
     // because date formats for headers might change depending on available size
     [self.eventsView reloadData];
@@ -1073,7 +1073,7 @@ typedef enum
 {
     NSDate *rowStart = [self dateForDayAtIndexPath:indexPath];
     MGCMonthPlannerWeekView *rowView = [self.eventsView dequeueReusableSupplementaryViewOfKind:MonthRowViewKind withReuseIdentifier:MonthRowViewIdentifier forIndexPath:indexPath];
-   
+    
     MGCEventsRowView *eventsView = [self eventsRowViewAtDate:rowStart];
     rowView.eventsView = eventsView;
     
@@ -1135,60 +1135,60 @@ typedef enum
 // pt is in self coordinates
 - (BOOL)didStartLongPressAtPoint:(CGPoint)pt
 {
-	// just in case previous operation did not end properly...
-	[self endInteraction];
-	
-	NSDate *date = nil;
-	NSUInteger index;
-	MGCEventView *eventCell = [self eventCellAtPoint:pt date:&date index:&index];
-	
-	if (eventCell)  // a cell was touched
-	{
+    // just in case previous operation did not end properly...
+    [self endInteraction];
+    
+    NSDate *date = nil;
+    NSUInteger index;
+    MGCEventView *eventCell = [self eventCellAtPoint:pt date:&date index:&index];
+    
+    if (eventCell)  // a cell was touched
+    {
         if (!self.canMoveEvents) return NO;
         
-		if ([self.dataSource respondsToSelector:@selector(monthPlannerView:canMoveCellForEventAtIndex:date:)])
-		{
-			if (![self.dataSource monthPlannerView:self canMoveCellForEventAtIndex:index date:date]) {
-				[self bounceAnimateCell:eventCell];
-				return NO;  // cancel gesture
-			}
-		}
-		
-		if ([self.delegate respondsToSelector:@selector(monthPlannerView:willStartMovingEventAtIndex:date:)])
-		{
-			[self.delegate monthPlannerView:self willStartMovingEventAtIndex:index date:date];
-		}
-		
-		self.dragEventDate = date;
-		self.dragEventIndex = index;
-		self.dragEventDateRange = [self.dataSource monthPlannerView:self dateRangeForEventAtIndex:index date:date];
-	
-		NSDate *touchDate = [self dayAtPoint:pt];
-		NSDate *eventDayStart = [self.calendar mgc_startOfDayForDate:self.dragEventDateRange.start];
-		self.dragEventTouchDayOffset = [self.calendar components:NSCalendarUnitDay fromDate:touchDate toDate:eventDayStart options:0].day;
-		
-		[self highlightDaysInRange:self.dragEventDateRange];
-
-		self.isInteractiveCellForNewEvent = NO;
-		self.interactiveCelltouchPoint = [self convertPoint:pt toView:eventCell];
-		
-		self.interactiveCell = [self.dataSource monthPlannerView:self cellForEventAtIndex:index date:date];
-
-		// adjust the frame
-		CGRect frame = [self.eventsView convertRect:eventCell.bounds fromView:eventCell];
-		self.interactiveCell.frame = frame;
-	}
-	else	// an empty space was touched
-	{
+        if ([self.dataSource respondsToSelector:@selector(monthPlannerView:canMoveCellForEventAtIndex:date:)])
+        {
+            if (![self.dataSource monthPlannerView:self canMoveCellForEventAtIndex:index date:date]) {
+                [self bounceAnimateCell:eventCell];
+                return NO;  // cancel gesture
+            }
+        }
+        
+        if ([self.delegate respondsToSelector:@selector(monthPlannerView:willStartMovingEventAtIndex:date:)])
+        {
+            [self.delegate monthPlannerView:self willStartMovingEventAtIndex:index date:date];
+        }
+        
+        self.dragEventDate = date;
+        self.dragEventIndex = index;
+        self.dragEventDateRange = [self.dataSource monthPlannerView:self dateRangeForEventAtIndex:index date:date];
+        
+        NSDate *touchDate = [self dayAtPoint:pt];
+        NSDate *eventDayStart = [self.calendar mgc_startOfDayForDate:self.dragEventDateRange.start];
+        self.dragEventTouchDayOffset = [self.calendar components:NSCalendarUnitDay fromDate:touchDate toDate:eventDayStart options:0].day;
+        
+        [self highlightDaysInRange:self.dragEventDateRange];
+        
+        self.isInteractiveCellForNewEvent = NO;
+        self.interactiveCelltouchPoint = [self convertPoint:pt toView:eventCell];
+        
+        self.interactiveCell = [self.dataSource monthPlannerView:self cellForEventAtIndex:index date:date];
+        
+        // adjust the frame
+        CGRect frame = [self.eventsView convertRect:eventCell.bounds fromView:eventCell];
+        self.interactiveCell.frame = frame;
+    }
+    else    // an empty space was touched
+    {
         if (!self.canCreateEvents) return NO;
         
         self.isInteractiveCellForNewEvent = YES;
-		// create a new cell
-		if ([self.dataSource respondsToSelector:@selector(monthPlannerView:cellForNewEventAtDate:)])
-		{
-			self.interactiveCell = [self.dataSource monthPlannerView:self cellForNewEventAtDate:date];
+        // create a new cell
+        if ([self.dataSource respondsToSelector:@selector(monthPlannerView:cellForNewEventAtDate:)])
+        {
+            self.interactiveCell = [self.dataSource monthPlannerView:self cellForNewEventAtDate:date];
             NSAssert(self.interactiveCell, @"monthPlannerView:cellForNewEventAtDate: can't return nil");
-		}
+        }
         else {
             MGCStandardEventView *cell= [[MGCStandardEventView alloc]initWithFrame:CGRectZero];
             cell.title = NSLocalizedString(@"New Event", nil);
@@ -1197,71 +1197,71 @@ typedef enum
         self.interactiveCell.frame = CGRectMake(0, 0, [self.layout columnWidth:0], self.itemHeight);
         self.interactiveCelltouchPoint = CGPointMake([self.layout columnWidth:0]/2., self.itemHeight/2.);
         self.interactiveCell.center = [self convertPoint:pt toView:self.eventsView];
-	}
-	
-	// show the interactive cell
-	self.interactiveCell.selected = YES;
-	[self.eventsView addSubview:self.interactiveCell];
-	self.interactiveCell.hidden = NO;
-	return YES;
+    }
+    
+    // show the interactive cell
+    self.interactiveCell.selected = YES;
+    [self.eventsView addSubview:self.interactiveCell];
+    self.interactiveCell.hidden = NO;
+    return YES;
 }
 
 
 // point in self coordinates
 - (void)moveInteractiveCellAtPoint:(CGPoint)point
 {
-	[self highlightDaysInRange:nil];
-	
-	NSDate *hoveredDate = [self dayAtPoint:point];
-	if (hoveredDate)
-	{
-		NSDate *highlightStart = hoveredDate;
-		if (self.dragEventDate)
-		{
-			NSDateComponents *comps = [NSDateComponents new];
-			comps.day = self.dragEventTouchDayOffset;
-			highlightStart = [self.calendar dateByAddingComponents:comps toDate:hoveredDate options:0];
-		}
-		
-		NSDateComponents *comps = [NSDateComponents new];
-		if (self.isInteractiveCellForNewEvent)
-		{
-			comps.day = 1;
-		}
-		else
-		{
-			comps.day = [[self daysRangeFromDateRange:self.dragEventDateRange]components:NSCalendarUnitDay forCalendar:self.calendar].day;
-		}
-		NSDate *highlightEnd = [self.calendar dateByAddingComponents:comps toDate:highlightStart options:0];
-		MGCDateRange *highlight = [MGCDateRange dateRangeWithStart:highlightStart end:highlightEnd];
-		
-		[self highlightDaysInRange:highlight];
-	}
-	else
-	{
-		[self highlightDaysInRange:self.dragEventDateRange];
-	}
-	
-	if (point.y > CGRectGetMaxY(self.eventsView.frame) - kDragScrollZoneSize)
-	{
-		[self.dragTimer invalidate];
-		self.dragTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(dragTimer:) userInfo:@{@"direction": @(CalendarViewScrollingDown)} repeats:YES];
-	}
-	else if (point.y < self.headerHeight + kDragScrollZoneSize)
-	{
-		[self.dragTimer invalidate];
-		self.dragTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(dragTimer:) userInfo:@{@"direction": @(CalendarViewScrollingUp)} repeats:YES];
-	}
-	else if (self.dragTimer)
-	{
-		[self.dragTimer invalidate];
-		self.dragTimer = nil;
-	}
-	
-	CGRect frame = self.interactiveCell.frame;
-	frame.origin = [self convertPoint:point toView:self.eventsView];
-	frame = CGRectOffset(frame, -self.interactiveCelltouchPoint.x, -self.interactiveCelltouchPoint.y);
-	self.interactiveCell.frame = frame;
+    [self highlightDaysInRange:nil];
+    
+    NSDate *hoveredDate = [self dayAtPoint:point];
+    if (hoveredDate)
+    {
+        NSDate *highlightStart = hoveredDate;
+        if (self.dragEventDate)
+        {
+            NSDateComponents *comps = [NSDateComponents new];
+            comps.day = self.dragEventTouchDayOffset;
+            highlightStart = [self.calendar dateByAddingComponents:comps toDate:hoveredDate options:0];
+        }
+        
+        NSDateComponents *comps = [NSDateComponents new];
+        if (self.isInteractiveCellForNewEvent)
+        {
+            comps.day = 1;
+        }
+        else
+        {
+            comps.day = [[self daysRangeFromDateRange:self.dragEventDateRange]components:NSCalendarUnitDay forCalendar:self.calendar].day;
+        }
+        NSDate *highlightEnd = [self.calendar dateByAddingComponents:comps toDate:highlightStart options:0];
+        MGCDateRange *highlight = [MGCDateRange dateRangeWithStart:highlightStart end:highlightEnd];
+        
+        [self highlightDaysInRange:highlight];
+    }
+    else
+    {
+        [self highlightDaysInRange:self.dragEventDateRange];
+    }
+    
+    if (point.y > CGRectGetMaxY(self.eventsView.frame) - kDragScrollZoneSize)
+    {
+        [self.dragTimer invalidate];
+        self.dragTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(dragTimer:) userInfo:@{@"direction": @(CalendarViewScrollingDown)} repeats:YES];
+    }
+    else if (point.y < self.headerHeight + kDragScrollZoneSize)
+    {
+        [self.dragTimer invalidate];
+        self.dragTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(dragTimer:) userInfo:@{@"direction": @(CalendarViewScrollingUp)} repeats:YES];
+    }
+    else if (self.dragTimer)
+    {
+        [self.dragTimer invalidate];
+        self.dragTimer = nil;
+    }
+    
+    CGRect frame = self.interactiveCell.frame;
+    frame.origin = [self convertPoint:point toView:self.eventsView];
+    frame = CGRectOffset(frame, -self.interactiveCelltouchPoint.x, -self.interactiveCelltouchPoint.y);
+    self.interactiveCell.frame = frame;
 }
 
 - (void)didEndLongPressAtPoint:(CGPoint)pt
@@ -1287,7 +1287,7 @@ typedef enum
                 return;
             }
         }
-        else	// new event
+        else    // new event
         {
             if ([self.delegate respondsToSelector:@selector(monthPlannerView:didShowCell:forNewEventAtDate:)])
             {
@@ -1305,7 +1305,7 @@ typedef enum
 - (void)handleLongPress:(UILongPressGestureRecognizer*)gesture
 {
     if (self.style != MGCMonthPlannerStyleEvents)
-        return;
+    return;
     
     CGPoint pt = [gesture locationInView:self];
     
@@ -1391,7 +1391,7 @@ typedef enum
         NSMutableParagraphStyle *para = [NSMutableParagraphStyle new];
         para.alignment = NSTextAlignmentCenter;
         
-        UIColor *textColor = [self.calendar mgc_isDate:date sameDayAsDate:[NSDate date]] ? [UIColor redColor] : [UIColor blackColor];
+        UIColor *textColor = [self.calendar mgc_isDate:date sameDayAsDate:[NSDate date]] ? [UIColor whiteColor] : [UIColor grayColor];
         
         attrStr = [[NSAttributedString alloc]initWithString:str attributes:@{ NSParagraphStyleAttributeName: para, NSForegroundColorAttributeName: textColor }];
     }
@@ -1414,7 +1414,7 @@ typedef enum
     view.label.hidden = self.monthHeaderStyle & MGCMonthHeaderStyleHidden;
     
     if (self.monthHeaderStyle & MGCMonthHeaderStyleHidden) return view;
- 
+    
     NSLocale *locale = [NSLocale currentLocale];
     
     static NSDateFormatter *dateFormatter = nil;
@@ -1422,10 +1422,10 @@ typedef enum
         dateFormatter = [NSDateFormatter new];
     }
     dateFormatter.calendar = self.calendar;
-
+    
     NSString *fmtTemplate = self.monthHeaderStyle & MGCMonthHeaderStyleShort ? @"MMMM" : @"MMMMYYYY";
     dateFormatter.dateFormat = [NSDateFormatter dateFormatFromTemplate:fmtTemplate options:0 locale:locale];
-
+    
     NSDate *date = [self dateStartingMonthAtIndex:indexPath.section];
     NSString *str = [[dateFormatter stringFromDate:date]uppercaseStringWithLocale:locale];
     
@@ -1472,7 +1472,7 @@ typedef enum
     view.drawHorizontalLines = self.gridStyle & MGCMonthPlannerGridStyleHorizontalLines;
     view.drawBottomDayLabelLines = self.gridStyle & MGCMonthPlannerGridStyleBottomDayLabel;
     view.dayCellHeaderHeight = self.dayCellHeaderHeight;
-
+    
     [view setNeedsDisplay];
     
     return view;
@@ -1480,17 +1480,17 @@ typedef enum
 
 - (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView viewForSupplementaryElementOfKind:(NSString*)kind atIndexPath:(NSIndexPath*)indexPath
 {
-	if ([kind isEqualToString:MonthBackgroundViewKind])
-	{
+    if ([kind isEqualToString:MonthBackgroundViewKind])
+    {
         return [self backgroundViewForMonthAtIndexPath:indexPath];
-	}
+    }
     else if ([kind isEqualToString:MonthHeaderViewKind]) {
         return [self headerViewForMonthAtIndexPath:indexPath];
     }
-	else if ([kind isEqualToString:MonthRowViewKind]) {
-		return [self monthRowViewAtIndexPath:indexPath];
-	}
-	return nil;
+    else if ([kind isEqualToString:MonthRowViewKind]) {
+        return [self monthRowViewAtIndexPath:indexPath];
+    }
+    return nil;
 }
 
 #pragma mark - MGCEventsRowViewDelegate
@@ -1515,7 +1515,7 @@ typedef enum
     
     NSInteger start = MAX(0, [self.calendar components:NSCalendarUnitDay fromDate:view.referenceDate toDate:dateRange.start options:0].day);
     NSInteger end = [self.calendar components:NSCalendarUnitDay fromDate:view.referenceDate toDate:dateRange.end options:0].day;
-	if ([dateRange.end timeIntervalSinceDate:[self.calendar mgc_startOfDayForDate:dateRange.end]] >= 0) {
+    if ([dateRange.end timeIntervalSinceDate:[self.calendar mgc_startOfDayForDate:dateRange.end]] >= 0) {
         end++;
     }
     end = MIN(end, NSMaxRange(view.daysRange));
@@ -1586,7 +1586,7 @@ typedef enum
     NSDateComponents *comps = [NSDateComponents new];
     comps.day = indexPath.section;
     NSDate *date = [self.calendar dateByAddingComponents:comps toDate:view.referenceDate options:0];
-
+    
     if ([self.selectedEventDate isEqualToDate:date] && indexPath.item == self.selectedEventIndex) {
         self.selectedEventDate = nil;
         self.selectedEventIndex = 0;
@@ -1684,3 +1684,4 @@ typedef enum
 }
 
 @end
+

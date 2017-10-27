@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -36,24 +36,19 @@
 #import "MGCDateRange.h"
 #import "OSCache.h"
 #import "MGCEventKitSupport.h"
+#import "Constant.h"
 
 
-typedef enum {
-    TimedEventType = 1,
-    AllDayEventType = 2,
-    AnyEventType = TimedEventType|AllDayEventType
-} EventType;
 
-
-static const NSUInteger cacheSize = 400;	// size of the cache (in days)
+static const NSUInteger cacheSize = 400;    // size of the cache (in days)
 static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
 
 @interface MGCDayPlannerEKViewController () <UINavigationControllerDelegate, EKEventEditViewDelegate, EKEventViewDelegate>
 
 @property (nonatomic) MGCEventKitSupport *eventKitSupport;
-@property (nonatomic) dispatch_queue_t bgQueue;			// dispatch queue for loading events
-@property (nonatomic) NSMutableOrderedSet *daysToLoad;	// dates for months of which we want to load events
+@property (nonatomic) dispatch_queue_t bgQueue;            // dispatch queue for loading events
+@property (nonatomic) NSMutableOrderedSet *daysToLoad;    // dates for months of which we want to load events
 @property (nonatomic) NSCache *eventsCache;
 @property (nonatomic) NSUInteger createdEventType;
 @property (nonatomic, copy) NSDate *createdEventDate;
@@ -79,7 +74,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
         [self.dayPlannerView setActivityIndicatorVisible:NO forDate:date];
     }
     [self.daysToLoad removeAllObjects];
-
+    
     [self.eventsCache removeAllObjects];
     [self fetchEventsInDateRange:self.dayPlannerView.visibleDays];
     [self.dayPlannerView reloadAllEvents];
@@ -121,6 +116,36 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     }
 }
 
+- (void)showEditControllerForEvent:(EKEvent*)ev
+{
+    MGCEKEventViewController *eventController = [MGCEKEventViewController new];
+    eventController.event = ev;
+    eventController.delegate = self;
+    eventController.allowsEditing = YES;
+    eventController.allowsCalendarPreview = YES;
+    
+    UINavigationController *nc = nil;
+    if ([self.delegate respondsToSelector:@selector(dayPlannerEKViewController:navigationControllerForPresentingEventViewController:)]) {
+        nc = [self.delegate dayPlannerEKViewController:self navigationControllerForPresentingEventViewController:eventController];
+    }
+    
+    if (nc) {
+        [nc pushViewController:eventController animated:YES];
+    }
+    else {
+        nc = [[UINavigationController alloc]initWithRootViewController:eventController];
+        nc.modalPresentationStyle = UIModalPresentationPopover;
+        eventController.presentationController.delegate = self;
+        
+        [self showDetailViewController:nc sender:self];
+        
+        UIPopoverPresentationController *popController = nc.popoverPresentationController;
+        popController.permittedArrowDirections = UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight;
+        popController.delegate = self;
+        popController.sourceView = self.dayPlannerView;
+    }
+}
+
 - (void)showPopoverForNewEvent:(EKEvent*)ev
 {
     EKEventEditViewController *eventController = [EKEventEditViewController new];
@@ -130,12 +155,13 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     eventController.modalInPopover = YES;
     eventController.modalPresentationStyle = UIModalPresentationPopover;
     eventController.presentationController.delegate = self;
+    eventController.delegate = self;
     
     [self showDetailViewController:eventController sender:self];
     
     CGRect cellRect = [self.dayPlannerView rectForNewEventOfType:self.createdEventType atDate:self.createdEventDate];
     CGRect visibleRect = CGRectIntersection(self.dayPlannerView.bounds, cellRect);
-
+    
     UIPopoverPresentationController *popController = eventController.popoverPresentationController;
     popController.permittedArrowDirections = UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight;
     popController.delegate = self;
@@ -265,9 +291,9 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
         
         if ([self.visibleCalendars containsObject:ev.calendar]) {
             if (type & AllDayEventType && ev.isAllDay)
-                [filteredEvents addObject:ev];
+            [filteredEvents addObject:ev];
             else if (type & TimedEventType && !ev.isAllDay)
-                [filteredEvents addObject:ev];
+            [filteredEvents addObject:ev];
         }
     }];
     
@@ -334,7 +360,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
         
         [self.daysToLoad addObject:dayStart];
         
-        dispatch_async(self.bgQueue, ^{	[self bg_loadOneDay]; });
+        dispatch_async(self.bgQueue, ^{    [self bg_loadOneDay]; });
         
         return YES;
     }
@@ -363,10 +389,10 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     EKEvent *ev = [self eventOfType:type atIndex:index date:date];
     
     MGCStandardEventView *evCell = (MGCStandardEventView*)[view dequeueReusableViewWithIdentifier:EventCellReuseIdentifier forEventOfType:type atIndex:index date:date];
-    evCell.font = [UIFont systemFontOfSize:11];
+    evCell.font = font12//[UIFont systemFontOfSize:11];
     evCell.title = ev.title;
     evCell.subtitle = ev.location;
-    evCell.color = [UIColor colorWithCGColor:ev.calendar.CGColor];
+    evCell.color = UIColorFromRGB(0xFA5C2B);
     evCell.style = MGCStandardEventViewStylePlain|MGCStandardEventViewStyleSubtitle;
     evCell.style |= (type == MGCAllDayEventType) ?: MGCStandardEventViewStyleBorder;
     return evCell;
@@ -392,8 +418,8 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
 - (BOOL)dayPlannerView:(MGCDayPlannerView*)view canMoveEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date toType:(MGCEventType)targetType date:(NSDate*)targetDate
 {
-	EKEvent *ev = [self eventOfType:type atIndex:index date:date];
-	return ev.calendar.allowsContentModifications;
+    EKEvent *ev = [self eventOfType:type atIndex:index date:date];
+    return ev.calendar.allowsContentModifications;
 }
 
 - (void)dayPlannerView:(MGCDayPlannerView*)view moveEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date toType:(MGCEventType)targetType date:(NSDate*)targetDate
@@ -424,7 +450,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     
     MGCStandardEventView *evCell = [MGCStandardEventView new];
     evCell.title = NSLocalizedString(@"New Event", nil);
-    evCell.color = [UIColor colorWithCGColor:defaultCalendar.CGColor];
+    evCell.color = UIColorFromRGB(0xFA5C2B);//[UIColor colorWithCGColor:defaultCalendar.CGColor];
     return evCell;
 }
 
@@ -441,7 +467,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     comps.hour = (((NSInteger) view.durationForNewTimedEvent) / (60 * 60)) - (comps.day * 24);
     comps.minute = (((NSInteger) view.durationForNewTimedEvent) / 60) - (comps.day * 24 * 60) - (comps.hour * 60);
     comps.second = ((NSInteger) round(view.durationForNewTimedEvent)) % 60;
-
+    ev.calendar.CGColor = UIColorFromRGB(0xFA5C2B).CGColor;
     ev.endDate = [self.calendar dateByAddingComponents:comps toDate:date options:0];
     ev.allDay = (type == MGCAllDayEventType) ? YES : NO;
     
@@ -534,9 +560,16 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
 #pragma mark - UINavigationControllerDelegate
 
-//- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-//{
-//}
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if ([viewController isKindOfClass:[UITableViewController class]]) {
+        
+        UITableView *tblView=((UITableViewController*)viewController).tableView;
+        
+        [tblView setBackgroundColor:[UIColor grayColor]];
+        [tblView setBackgroundView:nil];
+    }
+}
 
 @end
 

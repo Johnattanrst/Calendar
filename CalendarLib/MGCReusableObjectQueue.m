@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -45,10 +45,10 @@
 
 - (instancetype)init
 {
-	if (self = [super init]) {
+    if (self = [super init]) {
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(removeAllObjects) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
-		_reusableObjectsSets = [NSMutableDictionary new];
-		_objectClasses = [NSMutableDictionary new];
+        _reusableObjectsSets = [NSMutableDictionary new];
+        _objectClasses = [NSMutableDictionary new];
     }
     return self;
 }
@@ -63,60 +63,60 @@
 {
     static MGCReusableObjectQueue *queue;
     static dispatch_once_t onceToken;
-	
+    
     dispatch_once(&onceToken, ^{
         queue = [MGCReusableObjectQueue new];
     });
     
-	return queue;
+    return queue;
 }
 
 - (NSUInteger)count
 {
-	NSUInteger count = 0;
-	for (NSString *identifier in self.reusableObjectsSets) {
-		NSMutableSet *set = [self.reusableObjectsSets objectForKey:identifier];
-		count += set.count;
-	}
-	return count;
+    NSUInteger count = 0;
+    for (NSString *identifier in self.reusableObjectsSets) {
+        NSMutableSet *set = [self.reusableObjectsSets objectForKey:identifier];
+        count += set.count;
+    }
+    return count;
 }
 
 - (void)registerClass:(Class)objectClass forObjectWithReuseIdentifier:(NSString*)identifier
 {
     if (objectClass) {
         NSMutableSet *set = [self.reusableObjectsSets objectForKey:identifier];
-		if (!set) {
-			set = [NSMutableSet set];
-			[self.reusableObjectsSets setObject:set forKey:identifier];
-			[self.objectClasses setObject:NSStringFromClass(objectClass) forKey:identifier];
-		}
+        if (!set) {
+            set = [NSMutableSet set];
+            [self.reusableObjectsSets setObject:set forKey:identifier];
+            [self.objectClasses setObject:NSStringFromClass(objectClass) forKey:identifier];
+        }
     }
-	else {
+    else {
         [self.objectClasses removeObjectForKey:identifier];
-		[self.reusableObjectsSets removeObjectForKey:identifier];
+        [self.reusableObjectsSets removeObjectForKey:identifier];
     }
 }
 
 - (void)enqueueReusableObject:(id<MGCReusableObject>)object
 {
-	[[self.reusableObjectsSets objectForKey:object.reuseIdentifier]addObject:object];
+    [[self.reusableObjectsSets objectForKey:object.reuseIdentifier]addObject:object];
 }
 
 - (id<MGCReusableObject>)dequeueReusableObjectWithReuseIdentifier:(NSString *)identifier
 {
     id<MGCReusableObject> object = [[self.reusableObjectsSets objectForKey:identifier] anyObject];
     if (object) {
-		[[self.reusableObjectsSets objectForKey:identifier] removeObject:object];
-		if ([object respondsToSelector:@selector(prepareForReuse)]) {
-			[object prepareForReuse];
-		}
-	}
-	else {
+        [[self.reusableObjectsSets objectForKey:identifier] removeObject:object];
+        if ([object respondsToSelector:@selector(prepareForReuse)]) {
+            [object prepareForReuse];
+        }
+    }
+    else {
         object = [self newObjectWithReuseIdentifier:identifier];
         if (!object) {
             [NSException raise:@"Reuse queue exception" format:@"No class was registered for identifier %@", identifier];
         }
-		self.totalCreated++;
+        self.totalCreated++;
     }
     
     return object;
@@ -129,10 +129,10 @@
         Class objectClass = NSClassFromString(class);
         id object = [[objectClass alloc]init];
         [object setReuseIdentifier:identifier];
-		return object;
-	}
-	
-	return nil;
+        return object;
+    }
+    
+    return nil;
 }
 
 - (void)removeAllObjects
@@ -142,3 +142,4 @@
 
 
 @end
+

@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2016 Julien Martin
 //
@@ -38,3 +38,4 @@ CGSize MGCAlignedSizeMake(CGFloat width, CGFloat height);
 CGPoint MGCAlignedPoint(CGPoint point);
 CGPoint MGCAlignedPointMake(CGFloat x, CGFloat y);
 CGFloat MGCAlignedFloat(CGFloat f);
+

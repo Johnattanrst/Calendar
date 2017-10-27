@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -38,32 +38,32 @@
 
 - (MGCMonthPlannerView*)monthPlannerView
 {
-	return (MGCMonthPlannerView*)self.view;
+    return (MGCMonthPlannerView*)self.view;
 }
 
 - (void)setMonthPlannerView:(MGCMonthPlannerView*)monthPlannerView
 {
-	[super setView:monthPlannerView];
-	
-	if (!monthPlannerView.dataSource)
-		monthPlannerView.dataSource = self;
-	
-	if (!monthPlannerView.delegate)
-		monthPlannerView.delegate = self;
+    [super setView:monthPlannerView];
+    
+    if (!monthPlannerView.dataSource)
+    monthPlannerView.dataSource = self;
+    
+    if (!monthPlannerView.delegate)
+    monthPlannerView.delegate = self;
 }
 
 - (void)loadView
 {
-	if (self.nibName)
-	{
-		[super loadView];
-		NSAssert(self.monthPlannerView != nil, @"NIB file did not set monthPlannerView property.");
-		return;
-	}
-	
-	MGCMonthPlannerView *monthPlannerView = [[MGCMonthPlannerView alloc]initWithFrame:CGRectZero];
-	monthPlannerView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-	self.monthPlannerView = monthPlannerView;
+    if (self.nibName)
+    {
+        [super loadView];
+        NSAssert(self.monthPlannerView != nil, @"NIB file did not set monthPlannerView property.");
+        return;
+    }
+    
+    MGCMonthPlannerView *monthPlannerView = [[MGCMonthPlannerView alloc]initWithFrame:CGRectZero];
+    monthPlannerView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    self.monthPlannerView = monthPlannerView;
 }
 
 - (void)viewDidLoad
@@ -79,39 +79,40 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 #pragma mark - MGCMonthPlannerViewDataSource
 
 - (NSInteger)monthPlannerView:(MGCMonthPlannerView*)view numberOfEventsAtDate:(NSDate*)date
 {
-	return 0;
+    return 0;
 }
 
 - (MGCEventView*)monthPlannerView:(MGCMonthPlannerView*)view cellForEventAtIndex:(NSUInteger)index date:(NSDate*)date
 {
-	assert(@"monthPlannerView:cellForEventAtIndex:date: has to implemented in MGCMonthPlannerViewController subclasses.");
-	return nil;
+    assert(@"monthPlannerView:cellForEventAtIndex:date: has to implemented in MGCMonthPlannerViewController subclasses.");
+    return nil;
 }
 
 - (MGCDateRange*)monthPlannerView:(MGCMonthPlannerView*)view dateRangeForEventAtIndex:(NSUInteger)index date:(NSDate*)date
 {
-	assert(@"monthPlannerView:dateRangeForEventAtIndex:date: has to implemented in MGCMonthPlannerViewController subclasses.");
-	return nil;
+    assert(@"monthPlannerView:dateRangeForEventAtIndex:date: has to implemented in MGCMonthPlannerViewController subclasses.");
+    return nil;
 }
 
 - (MGCEventView*)monthPlannerView:(MGCMonthPlannerView *)view cellForNewEventAtDate:(NSDate*)date
 {
-	assert(@"monthPlannerView:cellForNewEventAtDate: has to implemented in MGCMonthPlannerViewController subclasses.");
-	return nil;
+    assert(@"monthPlannerView:cellForNewEventAtDate: has to implemented in MGCMonthPlannerViewController subclasses.");
+    return nil;
 }
 
 
 @end
+

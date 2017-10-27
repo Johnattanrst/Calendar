@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -38,7 +38,8 @@
 // It is the parent view for event content views, which are subclasses of MGCEventView.
 @interface MGCEventCell : UICollectionViewCell
 
-@property (nonatomic) MGCEventView *eventView;	// content view of the event cell
-@property (nonatomic) CGFloat visibleHeight;	// height of the visible portion of the cell (set via MGCEventCellLayoutAttributes)
+@property (nonatomic) MGCEventView *eventView;    // content view of the event cell
+@property (nonatomic) CGFloat visibleHeight;    // height of the visible portion of the cell (set via MGCEventCellLayoutAttributes)
 
 @end
+

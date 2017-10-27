@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -43,7 +43,7 @@
 @optional
 
 /*! Performs any clean up necessary to prepare the object for use again.
- *	If implemented, it is called when an object is dequeued. 
+ *    If implemented, it is called when an object is dequeued.
  */
 - (void)prepareForReuse;
 
@@ -69,12 +69,12 @@
 - (void)enqueueReusableObject:(id<MGCReusableObject>)object;
 
 /*! Returns an object whose class was previously registered with given identifier.
- *	If an object is available in the queue, it is returned. Otherwise, a new object is allocated. 
+ *    If an object is available in the queue, it is returned. Otherwise, a new object is allocated.
  */
 - (id<MGCReusableObject>)dequeueReusableObjectWithReuseIdentifier:(NSString*)identifier;
 
 /*! Registers an object class in the queue, for a given identifier.
- *	If objectClass is nil, all unused objects in the queue with given identifier are removed.
+ *    If objectClass is nil, all unused objects in the queue with given identifier are removed.
  */
 - (void)registerClass:(Class)objectClass forObjectWithReuseIdentifier:(NSString*)identifier;
 
@@ -82,3 +82,4 @@
 - (void)removeAllObjects;
 
 @end
+

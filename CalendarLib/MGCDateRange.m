@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -48,110 +48,110 @@ static NSDateFormatter *dateFormatter;
 
 - (void)checkIfValid
 {
-	NSAssert([self.start compare:self.end] != NSOrderedDescending, @"End date earlier than start date in DateRange object!");
+    NSAssert([self.start compare:self.end] != NSOrderedDescending, @"End date earlier than start date in DateRange object!");
 }
 
 + (instancetype)dateRangeWithStart:(NSDate*)start end:(NSDate*)end
 {
-	return [[self alloc] initWithStart:start end:end];
+    return [[self alloc] initWithStart:start end:end];
 }
 
 - (instancetype)initWithStart:(NSDate*)start end:(NSDate*)end
 {
-	if (self = [super init]) {
-		_start = [start copy];
-		_end = [end copy];
-	}
-	
-	[self checkIfValid];
-	
-	return self;
+    if (self = [super init]) {
+        _start = [start copy];
+        _end = [end copy];
+    }
+    
+    [self checkIfValid];
+    
+    return self;
 }
 
 // for debugging
 - (NSDateFormatter*)dateFormatter
 {
-	if (!dateFormatter) {
-		dateFormatter = [NSDateFormatter new];
-		dateFormatter.dateStyle = NSDateFormatterMediumStyle;
-		dateFormatter.timeStyle = NSDateFormatterMediumStyle;
-	}
-	return dateFormatter;
+    if (!dateFormatter) {
+        dateFormatter = [NSDateFormatter new];
+        dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+        dateFormatter.timeStyle = NSDateFormatterMediumStyle;
+    }
+    return dateFormatter;
 }
 
 - (NSDateComponents*)components:(NSCalendarUnit)unitFlags forCalendar:(NSCalendar*)calendar
 {
-	[self checkIfValid];
-	
-	return [calendar components:unitFlags fromDate:self.start toDate:self.end options:0];
+    [self checkIfValid];
+    
+    return [calendar components:unitFlags fromDate:self.start toDate:self.end options:0];
 }
 
 - (BOOL)containsDate:(NSDate*)date
 {
-	[self checkIfValid];
-	
-	return ([date compare:self.start] != NSOrderedAscending && [date compare:self.end] == NSOrderedAscending);
+    [self checkIfValid];
+    
+    return ([date compare:self.start] != NSOrderedAscending && [date compare:self.end] == NSOrderedAscending);
 }
 
 - (void)intersectDateRange:(MGCDateRange*)range
 {
-	[self checkIfValid];
-
-	// range.end <= start || end <= range.start
+    [self checkIfValid];
+    
+    // range.end <= start || end <= range.start
     if ([range.end compare:self.start] != NSOrderedDescending || [self.end compare:range.start] != NSOrderedDescending) {
         self.end = self.start;
         return;
     }
-
-	if ([self.start compare:range.start] == NSOrderedAscending) {
-		self.start = range.start;
-	}
-	if ([range.end compare:self.end] == NSOrderedAscending) {
-		self.end = range.end;
-	}
+    
+    if ([self.start compare:range.start] == NSOrderedAscending) {
+        self.start = range.start;
+    }
+    if ([range.end compare:self.end] == NSOrderedAscending) {
+        self.end = range.end;
+    }
 }
 
 - (BOOL)intersectsDateRange:(MGCDateRange*)range
 {
-	if ([range.end compare:self.start] != NSOrderedDescending || [self.end compare:range.start] != NSOrderedDescending)
-		return NO;
-	return YES;
+    if ([range.end compare:self.start] != NSOrderedDescending || [self.end compare:range.start] != NSOrderedDescending)
+    return NO;
+    return YES;
 }
 
 - (BOOL)includesDateRange:(MGCDateRange*)range
 {
-	if ([range.start compare:self.start] == NSOrderedAscending || [self.end compare:range.end] == NSOrderedAscending)
-		return NO;
-	return YES;
+    if ([range.start compare:self.start] == NSOrderedAscending || [self.end compare:range.end] == NSOrderedAscending)
+    return NO;
+    return YES;
 }
 
 - (void)unionDateRange:(MGCDateRange*)range
 {
-	[self checkIfValid];
-	[range checkIfValid];
-	
-	self.start = [self.start earlierDate:range.start];
-	self.end = [self.end laterDate:range.end];
+    [self checkIfValid];
+    [range checkIfValid];
+    
+    self.start = [self.start earlierDate:range.start];
+    self.end = [self.end laterDate:range.end];
 }
 
 - (void)enumerateDaysWithCalendar:(NSCalendar*)calendar usingBlock:(void (^)(NSDate *day, BOOL *stop))block
 {
-	NSDateComponents *comp = [NSDateComponents new];
-	comp.day = 1;
-
-	NSDate *date = self.start;
-	BOOL stop = NO;
-	
-	while (!stop && [date compare:self.end] == NSOrderedAscending) {
-		block(date, &stop);
-		date = [calendar dateByAddingComponents:comp toDate:self.start options:0];
-		comp.day++;
-	}
+    NSDateComponents *comp = [NSDateComponents new];
+    comp.day = 1;
+    
+    NSDate *date = self.start;
+    BOOL stop = NO;
+    
+    while (!stop && [date compare:self.end] == NSOrderedAscending) {
+        block(date, &stop);
+        date = [calendar dateByAddingComponents:comp toDate:self.start options:0];
+        comp.day++;
+    }
 }
 
 - (BOOL)isEqualToDateRange:(MGCDateRange*)range
 {
-	return range && [range.start isEqualToDate:self.start] && [range.end isEqualToDate:self.end];
+    return range && [range.start isEqualToDate:self.start] && [range.end isEqualToDate:self.end];
 }
 
 - (BOOL)isEmpty
@@ -168,23 +168,24 @@ static NSDateFormatter *dateFormatter;
 
 - (BOOL)isEqual:(id)object
 {
-	if (self == object)
-		return YES;
-	
-	if (![object isKindOfClass:[MGCDateRange class]])
-		return NO;
-	
-	return [self isEqualToDateRange:(MGCDateRange*)object];
+    if (self == object)
+    return YES;
+    
+    if (![object isKindOfClass:[MGCDateRange class]])
+    return NO;
+    
+    return [self isEqualToDateRange:(MGCDateRange*)object];
 }
 
 - (NSUInteger)hash
 {
-	return NSUINTROTATE([self.start hash], NSUINT_BIT / 2) ^ [self.end hash];
+    return NSUINTROTATE([self.start hash], NSUINT_BIT / 2) ^ [self.end hash];
 }
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"[%@ - %@[", [self.dateFormatter stringFromDate:self.start], [self.dateFormatter stringFromDate:self.end]];
+    return [NSString stringWithFormat:@"[%@ - %@[", [self.dateFormatter stringFromDate:self.start], [self.dateFormatter stringFromDate:self.end]];
 }
 
 @end
+

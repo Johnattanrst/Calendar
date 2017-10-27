@@ -5,7 +5,7 @@
 //  Distributed under the MIT License
 //  Get the latest version from here:
 //
-//	https://github.com/jumartin/Calendar
+//    https://github.com/jumartin/Calendar
 //
 //  Copyright (c) 2014-2015 Julien Martin
 //
@@ -36,42 +36,42 @@
 - (id)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-		self.backgroundColor = [UIColor clearColor];
-		self.userInteractionEnabled = NO;
-		self.gridColor = [UIColor colorWithRed:.6f green:.6f blue:.6f alpha:1.];
+        self.backgroundColor = [UIColor clearColor];
+        self.userInteractionEnabled = NO;
+        self.gridColor = [UIColor colorWithRed:.6f green:.6f blue:.6f alpha:1.];
         self.lastColumn = 7;
         self.drawHorizontalLines = YES;
         self.drawVerticalLines = YES;
-	}
+    }
     return self;
 }
 
 - (void)layoutSubviews
 {
-	[super layoutSubviews];
-	[self setNeedsDisplay];
+    [super layoutSubviews];
+    [self setNeedsDisplay];
 }
 
 - (void)drawRect:(CGRect)rect
 {
-	CGContextRef c = UIGraphicsGetCurrentContext();
-	
-	CGFloat colWidth = self.numberOfColumns > 0 ? (self.bounds.size.width / self.numberOfColumns) : self.bounds.size.width;
-	CGFloat rowHeight = self.numberOfRows > 0 ? (self.bounds.size.height / self.numberOfRows) : self.bounds.size.height;
-	
-    CGContextSetStrokeColorWithColor(c, self.gridColor.CGColor);
-	CGContextSetLineWidth(c, .5);
-	
-	CGContextBeginPath(c);
+    CGContextRef c = UIGraphicsGetCurrentContext();
     
-	CGFloat x1, y1, x2, y2;
-	
+    CGFloat colWidth = self.numberOfColumns > 0 ? (self.bounds.size.width / self.numberOfColumns) : self.bounds.size.width;
+    CGFloat rowHeight = self.numberOfRows > 0 ? (self.bounds.size.height / self.numberOfRows) : self.bounds.size.height;
+    
+    CGContextSetStrokeColorWithColor(c, self.gridColor.CGColor);
+    CGContextSetLineWidth(c, .5);
+    
+    CGContextBeginPath(c);
+    
+    CGFloat x1, y1, x2, y2;
+    
     if (self.drawHorizontalLines) {
         for (int i = 0; i <= self.numberOfRows && self.numberOfRows != 0; i++) {
             y2 = y1 = rowHeight * i;
             x1 = i == 0 ? self.firstColumn * colWidth : 0;
             x2 = i == self.numberOfRows ? self.lastColumn * colWidth : CGRectGetMaxX(rect);
-	
+            
             CGContextMoveToPoint(c, x1, y1);
             CGContextAddLineToPoint(c, x2, y2);
         }
@@ -87,19 +87,20 @@
             CGContextAddLineToPoint(c, x2, y2);
         }
     }
-	
+    
     if (self.drawVerticalLines) {
         for (int j = 0; j <= self.numberOfColumns; j++) {
             x2 = x1 = colWidth * j;
             y1 = j < self.firstColumn ? rowHeight : 0;
             y2 = j <= self.lastColumn ? self.numberOfRows * rowHeight : (self.numberOfRows - 1) * rowHeight;
-		
+            
             CGContextMoveToPoint(c, x1, y1);
             CGContextAddLineToPoint(c, x2, y2);
         }
     }
     
-	CGContextStrokePath(c);
+    CGContextStrokePath(c);
 }
 
 @end
+
