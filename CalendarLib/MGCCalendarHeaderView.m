@@ -8,6 +8,7 @@
 #import "MGCCalendarHeaderView.h"
 #import "MGCCalendarHeaderCell.h"
 #import "MGCDayPlannerView.h"
+#import "Constant.h"
 
 typedef NS_ENUM(NSInteger, HeaderSection){
     PreviousWeekSection = 0,
@@ -52,7 +53,7 @@ static CGFloat kItemHeight = 60;
     if (self) {
         
         self.dayPlannerView = dayPlannerView;
-        self.headerBackgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0];;
+        self.headerBackgroundColor = UIColorFromRGB(0x23282e);//[UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0];;
         
         //setup the flow layout
         self.flowLayout = (UICollectionViewFlowLayout*)layout;
@@ -82,7 +83,8 @@ static CGFloat kItemHeight = 60;
         //Bottom label to display full date
         self.detailsLabel = [[UILabel alloc] initWithFrame:CGRectZero]; //will be resized to fit
         self.detailsLabel.backgroundColor = self.headerBackgroundColor;
-        self.detailsLabel.textColor = [UIColor darkGrayColor];
+        self.detailsLabel.textColor = [UIColor lightGrayColor];
+        self.detailsLabel.font = font15;
         self.detailsLabel.textAlignment = NSTextAlignmentCenter;
         self.detailsDateFormater = [[NSDateFormatter alloc] init];
         [self.detailsDateFormater setDateStyle:NSDateFormatterFullStyle];
@@ -94,7 +96,7 @@ static CGFloat kItemHeight = 60;
         //setup weeks dates
         [self setupWeekDates];
         
-        [self registerNib:[UINib nibWithNibName:@"MGCCalendarHeaderCell" bundle:nil] forCellWithReuseIdentifier:kCellIdentifier];
+        [self registerNib:[UINib nibWithNibName:@"MGCCalendarHeaderCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:kCellIdentifier];
         
         
     }
@@ -192,15 +194,15 @@ static CGFloat kItemHeight = 60;
     MGCCalendarHeaderCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier forIndexPath:indexPath];
     
     switch (indexPath.section) {
-        case PreviousWeekSection://left section
+            case PreviousWeekSection://left section
             cell.date = [self.previousWeekDates objectAtIndex:indexPath.row];
             break;
             
-        case CurrentWeekSection://central section
+            case CurrentWeekSection://central section
             cell.date = [self.currentWeekDates objectAtIndex:indexPath.row];
             break;
             
-        case NextWeekSection://right section
+            case NextWeekSection://right section
             cell.date = [self.nextWeekDates objectAtIndex:indexPath.row];
             break;
     }
@@ -247,3 +249,4 @@ static CGFloat kItemHeight = 60;
 }
 
 @end
+
