@@ -291,9 +291,9 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
         
         if ([self.visibleCalendars containsObject:ev.calendar]) {
             if (type & AllDayEventType && ev.isAllDay)
-            [filteredEvents addObject:ev];
+                [filteredEvents addObject:ev];
             else if (type & TimedEventType && !ev.isAllDay)
-            [filteredEvents addObject:ev];
+                [filteredEvents addObject:ev];
         }
     }];
     

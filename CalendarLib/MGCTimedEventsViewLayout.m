@@ -474,5 +474,65 @@ static NSString* const EventCellsKey = @"EventCellsKey";
     return [delegate collectionView:self.collectionView targetContentOffsetForProposedContentOffset:proposedContentOffset];
 }
 
+- (NSArray*)elementsPerDate:(NSDate*)date {
+    NSMutableArray *array = [NSMutableArray array];
+    
+    NSArray *items = [[NSUserDefaults standardUserDefaults] arrayForKey:@"AvailableTime"];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEEE"];
+    NSString *dayName = [dateFormatter stringFromDate:date];
+    
+    float width = self.dayColumnSize.width;
+    
+    for (NSDictionary *item in items) {
+        
+        //Views for day
+        if ([dayName isEqualToString:[item valueForKey:@"name"]]) {
+            NSArray *dateFrom = [[item valueForKey:@"timeFrom"] componentsSeparatedByString:@":"];
+            float valueFrom1 = [[dateFrom firstObject] floatValue];
+            float valueFrom2 = [[dateFrom lastObject] floatValue] / 60.;
+            
+            CGRect frameFrom = CGRectMake(61, 15, width, valueFrom1 * 50. + 50. * valueFrom2);
+            [array addObject:[[UIView alloc] initWithFrame:frameFrom]];
+            
+            NSArray *dateTo = [[item valueForKey:@"timeTo"] componentsSeparatedByString:@":"];
+            float valueTo1 = [[dateTo firstObject] floatValue];
+            float valueTo2 = [[dateTo lastObject] floatValue] / 60.;
+            
+            float y = (valueTo1 * 50. + 50. * valueTo2) + 15;
+            CGRect frameTo = CGRectMake(60, y, width, 50 * 24 - y + 15);
+            [array addObject:[[UIView alloc] initWithFrame:frameTo]];
+            break;
+        }
+    }
+    
+    if ([array count] > 0) {
+        for (NSDictionary *item in items) {
+            
+            //Views for day
+            if ([[item valueForKey:@"name"] isEqualToString:@"LunchTime"]) {
+                NSArray *dateFrom = [[item valueForKey:@"timeFrom"] componentsSeparatedByString:@":"];
+                float valueFrom1 = [[dateFrom firstObject] floatValue];
+                float valueFrom2 = [[dateFrom lastObject] floatValue] / 60.;
+                
+                
+                NSArray *dateTo = [[item valueForKey:@"timeTo"] componentsSeparatedByString:@":"];
+                float valueTo1 = [[dateTo firstObject] floatValue];
+                float valueTo2 = [[dateTo lastObject] floatValue] / 60.;
+                
+                float y = (valueFrom1 * 50. + 50. * valueFrom2);
+                CGRect frameTo = CGRectMake(61, y + 15, width, valueTo1 * 50. + 50. * valueTo2 - y);
+                [array addObject:[[UIView alloc] initWithFrame:frameTo]];
+                break;
+            }
+        }
+    } else {
+        CGRect frame = CGRectMake(61, 15, width, 50 * 24);
+        [array addObject:[[UIView alloc] initWithFrame:frame]];
+    }
+    
+    return array;
+}
 @end
 

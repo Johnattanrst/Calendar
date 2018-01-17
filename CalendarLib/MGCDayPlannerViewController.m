@@ -51,10 +51,10 @@
     [super setView:dayPlannerView];
     
     if (!dayPlannerView.dataSource)
-    dayPlannerView.dataSource = self;
+        dayPlannerView.dataSource = self;
     
     if (!dayPlannerView.delegate)
-    dayPlannerView.delegate = self;
+        dayPlannerView.delegate = self;
 }
 
 #pragma mark - UIViewController

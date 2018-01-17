@@ -43,7 +43,7 @@
 #import "MGCAlignedGeometry.h"
 #import "OSCache.h"
 #import "Constant.h"
-
+//#import <Fitii_PT-Swift.h>
 
 // used to restrict scrolling to one direction / axis
 typedef enum: NSUInteger
@@ -155,6 +155,8 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 
 @property (nonatomic) OSCache *dimmedTimeRangesCache;          // cache for dimmed time ranges (indexed by date)
 
+@property (nonatomic) BOOL canRemoveOutOfTimeViews;
+
 @end
 
 
@@ -189,7 +191,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     _allDayEventCellHeight = 20;
     _dimmingColor = [UIColor greenColor];
     _pagingEnabled = YES;
-    _zoomingEnabled = YES;
+    _zoomingEnabled = NO;
     _canCreateEvents = YES;
     _canMoveEvents = YES;
     _allowsSelection = YES;
@@ -262,7 +264,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
         _numberOfVisibleDays = numberOfVisibleDays;
         
         if (self.dateRange && [self.dateRange components:NSCalendarUnitDay forCalendar:self.calendar].day < numberOfVisibleDays)
-        return;
+            return;
         
         [self reloadCollectionViews];
         [self scrollToDate:date options:MGCDayPlannerScrollDate animated:NO];
@@ -370,7 +372,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     NSUInteger first = floorf(self.timedEventsView.contentOffset.x / dayWidth);
     NSDate *firstDay = [self dateFromDayOffset:first];
     if (self.dateRange && [firstDay compare:self.dateRange.start] == NSOrderedAscending)
-    firstDay = self.dateRange.start;
+        firstDay = self.dateRange.start;
     
     // since the day column width is rounded, there can be a difference of a few points between
     // the right side of the view bounds and the limit of the last column, causing last visible day
@@ -380,7 +382,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     NSUInteger last = ceilf((CGRectGetMaxX(self.timedEventsView.bounds) - diff) / dayWidth);
     NSDate *lastDay = [self dateFromDayOffset:last];
     if (self.dateRange && [lastDay compare:self.dateRange.end] != NSOrderedAscending)
-    lastDay = self.dateRange.end;
+        lastDay = self.dateRange.end;
     
     return [MGCDateRange dateRangeWithStart:firstDay end:lastDay];
 }
@@ -761,7 +763,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 {
     NSDate *next = [self nextDateForPagingAfterDate:self.visibleDays.start];
     if (date != nil)
-    *date = next;
+        *date = next;
     [self scrollToDate:next options:MGCDayPlannerScrollDate animated:animated];
 }
 
@@ -770,7 +772,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 {
     NSDate *prev = [self prevDateForPagingBeforeDate:self.firstVisibleDate];
     if (date != nil)
-    *date = prev;
+        *date = prev;
     [self scrollToDate:prev options:MGCDayPlannerScrollDate animated:animated];
 }
 
@@ -1715,7 +1717,56 @@ static const CGFloat kMaxHourSlotHeight = 150.;
         self.interactiveCell.hidden = (self.interactiveCellType == MGCTimedEventType && !CGRectIntersectsRect(self.timedEventsView.frame, frame));
     }
     
+    //---Out of working hours--\\
+    
+    [self deleteOutOfTimeViews];
+    
+    for (int i = 0; i < self.numberOfVisibleDays; i++) {
+        NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+        dayComponent.day = i;
+        
+        NSCalendar *theCalendar = [NSCalendar currentCalendar];
+        NSDate *date = [theCalendar dateByAddingComponents:dayComponent toDate:self.firstVisibleDate options:0];
+        
+        NSArray *array = [self.timedEventsViewLayout elementsPerDate:date];
+        CGFloat offsetX = [self xOffsetFromDayOffset:i];
+        int index = 0;
+        
+        for (UIView *itemView in array) {
+            CGRect frame = itemView.frame;
+            frame.origin.x += offsetX;
+            UIView *scheduleView = [[UIView alloc] initWithFrame:frame];
+            scheduleView.backgroundColor = [UIColorFromRGB(0x24282e) colorWithAlphaComponent:0.95];
+            scheduleView.tag = 1001;
+            
+            scheduleView.layer.borderWidth = 0.5;
+            scheduleView.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2].CGColor;
+            
+            UILabel *label = [[UILabel alloc] initWithFrame:scheduleView.bounds];
+            label.font = font14;
+            label.text = @"Unavailable";
+            label.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.05];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
+            [scheduleView addSubview:label];
+            
+            scheduleView.userInteractionEnabled = false;
+            [self.timeScrollView addSubview:scheduleView];
+            index ++;
+        }
+    }
+    
+    //---Out of working hours--\\
+    
     [self.allDayEventsView flashScrollIndicators];
+}
+
+- (void)deleteOutOfTimeViews {
+    for (UIView *itemView in self.timeScrollView.subviews) {
+        if (itemView.tag == 1001) {
+            [itemView removeFromSuperview];
+        }
+    }
 }
 
 #pragma mark - UIView
@@ -2021,7 +2072,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     NSAssert(dateRange, @"[AllDayEventsViewLayoutDelegate dayPlannerView:dateRangeForEventOfType:atIndex:date:] cannot return nil!");
     
     if ([dateRange.start compare:self.startDate] == NSOrderedAscending)
-    dateRange.start = self.startDate;
+        dateRange.start = self.startDate;
     
     NSUInteger startSection = [self dayOffsetFromDate:dateRange.start];
     NSUInteger length = [dateRange components:NSCalendarUnitDay forCalendar:self.calendar].day;
@@ -2099,6 +2150,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
         self.scrollStartOffset = scrollView.contentOffset;
         self.scrollDirection = direction;
     }
+    self.canRemoveOutOfTimeViews = true;
 }
 
 // even though directionalLockEnabled is set on both scrolling-enabled scrollviews,
@@ -2309,13 +2361,15 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     
     // direction will be determined on first scrollViewDidScroll: received
     [self scrollViewWillStartScrolling:scrollView direction:ScrollDirectionUnknown];
+    
+    self.canRemoveOutOfTimeViews = true;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView*)scrollview
 {
     // avoid looping
     if (scrollview != self.controllingScrollView)
-    return;
+        return;
     
     //NSLog(@"scrollViewDidScroll");
     
@@ -2323,6 +2377,11 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     
     if (self.scrollDirection & ScrollDirectionHorizontal) {
         [self recenterIfNeeded];
+        
+        if (self.canRemoveOutOfTimeViews) {
+            self.canRemoveOutOfTimeViews = false;
+            [self deleteOutOfTimeViews];
+        }
     }
     
     [self synchronizeScrolling];
