@@ -507,10 +507,11 @@ static NSString* const EventCellsKey = @"EventCellsKey";
         }
     }
     
+    /// Available day
     if ([array count] > 0) {
         for (NSDictionary *item in items) {
             
-            //Views for day
+            //Views for day - Lunch time
             if ([[item valueForKey:@"name"] isEqualToString:@"LunchTime"]) {
                 NSArray *dateFrom = [[item valueForKey:@"timeFrom"] componentsSeparatedByString:@":"];
                 float valueFrom1 = [[dateFrom firstObject] floatValue];
@@ -527,7 +528,46 @@ static NSString* const EventCellsKey = @"EventCellsKey";
                 break;
             }
         }
-    } else {
+        
+        //Views for day - Trainer Events.
+        NSArray *trainerEvents = [[NSUserDefaults standardUserDefaults] arrayForKey:@"TrainerEvents"];
+        
+        int i = 1;
+        for (NSDictionary *item in trainerEvents) {
+            NSString *startTime = [item valueForKey:@"startTime"];
+            NSString *endTime = [item valueForKey:@"endTime"];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+            
+            NSLocale *posix = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+            [formatter setLocale:posix];
+            NSDate *startDate = [formatter dateFromString:startTime];
+            
+            NSCalendar *calendar = [NSCalendar currentCalendar];
+            if ([calendar isDate:startDate inSameDayAsDate:date]) {
+                NSDate *endDate = [formatter dateFromString:endTime];
+                
+                NSDateComponents *startDateComponents = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:startDate];
+                NSDateComponents *endDateComponents = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:endDate];
+                
+                float valueFrom1 = (float)[startDateComponents hour];
+                float valueFrom2 = (float)[startDateComponents minute] / 60.;
+                
+                float valueTo1 = (float)[endDateComponents hour];
+                float valueTo2 = (float)[endDateComponents minute] / 60.;
+                
+                float y = (valueFrom1 * 50. + 50. * valueFrom2);
+                CGRect frameTo = CGRectMake(61, y + 15, width, valueTo1 * 50. + 50. * valueTo2 - y);
+                UIView *view = [[UIView alloc] initWithFrame:frameTo];
+                view.tag = i;
+                [array addObject: view];
+            }
+            i ++;
+        }
+        
+        
+        
+    } else { /// Unavailable day.
         CGRect frame = CGRectMake(61, 15, width, 50 * 24);
         [array addObject:[[UIView alloc] initWithFrame:frame]];
     }

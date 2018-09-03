@@ -1736,22 +1736,53 @@ static const CGFloat kMaxHourSlotHeight = 150.;
             CGRect frame = itemView.frame;
             frame.origin.x += offsetX;
             UIView *scheduleView = [[UIView alloc] initWithFrame:frame];
-            scheduleView.backgroundColor = [UIColorFromRGB(0x24282e) colorWithAlphaComponent:0.95];
+            scheduleView.backgroundColor = [UIColorFromRGB(0x24282e) colorWithAlphaComponent:0.5];
             scheduleView.tag = 1001;
             
             scheduleView.layer.borderWidth = 0.5;
             scheduleView.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2].CGColor;
+            if (itemView.tag == 0) {
+                UILabel *label = [[UILabel alloc] initWithFrame:scheduleView.bounds];
+                label.font = font14;
+                label.text = @"Unavailable";
+                label.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.05];
+                label.textAlignment = NSTextAlignmentCenter;
+                label.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
+                [scheduleView addSubview:label];
+                [self.timeScrollView addSubview:scheduleView];
+            } else {
+                scheduleView.backgroundColor = [UIColorFromRGB(0x24282e) colorWithAlphaComponent:0.5];
+                
+                CGRect newFrame = CGRectMake(scheduleView.frame.size.width - 74, scheduleView.frame.size.height * 0.5 - 8, 64, 16);
+                
+                UILabel *label = [[UILabel alloc] initWithFrame:newFrame];
+                label.font = font12Bold;
+                label.text = @"Fitii Event";
+                label.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
+                label.layer.cornerRadius = 8.0;
+                label.layer.borderWidth = 1.0;
+                label.layer.masksToBounds = true;
+                label.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5].CGColor;
+                label.textAlignment = NSTextAlignmentCenter;
+                label.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+                [scheduleView addSubview:label];
+                
+                UIButton *button = [[UIButton alloc] initWithFrame:scheduleView.bounds];
+                button.tag = itemView.tag;
+                [button addTarget:self
+                           action:@selector(trainerEventTapped:)
+                 forControlEvents:UIControlEventTouchUpInside];
+                button.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
+                [scheduleView addSubview:button];
+                
+                CGRect theframe = scheduleView.frame;
+                theframe.origin.x = self.timedEventsView.contentOffset.x;
+                scheduleView.frame = theframe;
+                
+                [self.timedEventsView addSubview:scheduleView];
+                [self.timedEventsView sendSubviewToBack:scheduleView];
+            }
             
-            UILabel *label = [[UILabel alloc] initWithFrame:scheduleView.bounds];
-            label.font = font14;
-            label.text = @"Unavailable";
-            label.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.05];
-            label.textAlignment = NSTextAlignmentCenter;
-            label.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
-            [scheduleView addSubview:label];
-            
-            scheduleView.userInteractionEnabled = false;
-            [self.timeScrollView addSubview:scheduleView];
             index ++;
         }
     }
@@ -1761,8 +1792,20 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     [self.allDayEventsView flashScrollIndicators];
 }
 
+-(void) trainerEventTapped:(UIButton*)sender {
+    NSLog(@"It works");
+    
+    [self.delegate selectEventAtIndex:sender.tag - 1];
+}
+
 - (void)deleteOutOfTimeViews {
     for (UIView *itemView in self.timeScrollView.subviews) {
+        if (itemView.tag == 1001) {
+            [itemView removeFromSuperview];
+        }
+    }
+    
+    for (UIView *itemView in self.timedEventsView.subviews) {
         if (itemView.tag == 1001) {
             [itemView removeFromSuperview];
         }

@@ -674,6 +674,8 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
  */
 - (void)dayPlannerView:(MGCDayPlannerView*)view didSelectEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
 
+- (void)selectEventAtIndex:(NSUInteger)index;
+
 /*!
  @abstract    Tells the delegate that the specified event was deselected.
  @param        view        The day planner view object notifying about the selection change.
